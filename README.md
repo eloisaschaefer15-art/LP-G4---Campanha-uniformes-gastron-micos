@@ -91,7 +91,7 @@ Enquanto um arquivo não existe, o lugar dele aparece como bloco cinza com o nom
 | | `hero-poster.webp` | Hero, primeiro frame e versão estática | WebP 1920×1080 |
 | | `hero-01.webp` … `hero-04.webp` | Hero, slides 2 a 5 | WebP 1920×1080 |
 | `assets/produtos/` | `cozinha-dolma`, `cozinha-touca`, `cozinha-calca`, `cozinha-avental`, `salao-camisa`, `salao-avental` (`.webp`) | Seção Produtos | WebP 800×1000 (4:5), peça **em uso** |
-| `assets/case/` | `case-01.webp` (vertical) + `case-02` … `case-04.webp` (horizontais) | Seção Clientes, galeria do case | WebP 1200×1500 e 1200×900 |
+| `assets/case/` | `case-01.webp` (foto de maior impacto) + `case-02` … `case-04.webp` | Seção Clientes, galeria do case | `case-01`: WebP 1920×1080 (16:9 no desktop; no celular é recortada em 4:5, então mantenha o assunto no centro). `case-02…04`: WebP 1200×1500 (4:5; no celular recortadas em 4:3) |
 | `assets/clientes/` | `quinta-da-oliva`, `pateo-du-fogo`, `luigia-pizzaria`, `don-ritter`, `dom-aureo` (`.svg`) | Letreiro "Quem já atendemos" | SVG **monocromático em `#0A2447`** |
 
 Observações:
