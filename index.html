@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes</title>
+  <meta name="description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
+  <meta name="theme-color" content="#0A2447">
+
+  <!-- Open Graph / Twitter (o link vai circular muito no WhatsApp) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="G4 Uniformes">
+  <meta property="og:title" content="Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes">
+  <meta property="og:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
+  <meta property="og:image" content="assets/brand/og-image.jpg"><!-- TODO: trocar por URL absoluta quando o endereço final (Pages ou domínio) estiver definido; o WhatsApp não lê caminho relativo -->
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes">
+  <meta name="twitter:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
+  <meta name="twitter:image" content="assets/brand/og-image.jpg">
+
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+
+  <!-- Fontes: Figtree = substituta provisória da Texta (ver css/style.css e README). IBM Plex Mono via Google Fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <!-- Quando a Texta chegar: preload só dos pesos acima da dobra, ex.:
+  <link rel="preload" href="assets/fonts/texta-heavy.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/texta-book.woff2" as="font" type="font/woff2" crossorigin>
+  -->
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    // Marca JS ativo (liga os estados iniciais das animações) e troca assets ausentes por placeholders.
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', function (e) {
+      var el = e.target;
+      if (el && (el.tagName === 'IMG' || el.tagName === 'SOURCE' || el.tagName === 'VIDEO')) {
+        var box = el.closest('[data-ph]');
+        if (box) box.classList.add('is-missing');
+      }
+    }, true);
+  </script>
+
+  <!-- ===== Espaço para Meta Pixel / Google Tag (desativado) =====
+  <script>/* cole aqui o snippet do Meta Pixel */</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  ============================================================= -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "G4 Uniformes",
+    "description": "Uniformes profissionais com produção própria para bares e restaurantes.",
+    "foundingDate": "2015",
+    "image": "assets/brand/og-image.jpg",
+    "telephone": "TODO",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "TODO",
+      "postalCode": "TODO",
+      "addressLocality": "Cascavel",
+      "addressRegion": "PR",
+      "addressCountry": "BR"
+    },
+    "areaServed": "Cascavel e região"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ================= TOPO: barra de contagem + menu ================= -->
+  <header class="topbar" id="topbar">
+    <div class="countbar" id="countbar" role="region" aria-label="Prazo de prioridade de produção">
+      <div class="container countbar__inner">
+        <p class="countbar__text countbar__text--full" data-deadline-text>Feche seu pedido com prioridade de produção até: 15/10</p>
+        <p class="countbar__text countbar__text--short" data-deadline-text>Prioridade até 15/10 ·</p>
+        <p class="countbar__after" data-after-text hidden>Fale com um consultor e confira a agenda de produção</p>
+        <span class="countbar__timer mono" data-countdown="inline" aria-hidden="true">
+          <span class="countbar__long"><span data-cd="d">00</span> dias <span data-cd="h">00</span>:<span data-cd="m">00</span>:<span data-cd="s">00</span></span><span class="countbar__compact"><span data-cd="d">00</span>d <span data-cd="h">00</span>:<span data-cd="m">00</span>:<span data-cd="s">00</span></span>
+        </span>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Principal">
+      <div class="container nav__inner">
+        <a class="nav__logo" href="#inicio" aria-label="G4 Uniformes, voltar ao início">
+          <!-- TODO: trocar pelo logo completo em SVG branco (assets/brand/logo-g4-branco.svg). O Figma só expôs o símbolo. -->
+          <img src="assets/brand/simbolo-g4.svg" alt="" width="36" height="36">
+        </a>
+
+        <ul class="nav__links">
+          <li><a href="#inicio" data-nav>Início</a></li>
+          <li><a href="#produtos" data-nav>Produtos</a></li>
+          <li><a href="#diferenciais" data-nav>Diferenciais</a></li>
+          <li><a href="#clientes" data-nav>Clientes</a></li>
+          <li><a href="#como-funciona" data-nav>Como Funciona</a></li>
+        </ul>
+
+        <a class="btn btn--orange nav__cta" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Peça seu orçamento pelo WhatsApp (abre em nova aba)">Peça seu orçamento</a>
+
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="menu-mobile" id="menu-mobile" hidden>
+      <ul>
+        <li><a href="#inicio" data-nav>Início</a></li>
+        <li><a href="#produtos" data-nav>Produtos</a></li>
+        <li><a href="#diferenciais" data-nav>Diferenciais</a></li>
+        <li><a href="#clientes" data-nav>Clientes</a></li>
+        <li><a href="#como-funciona" data-nav>Como Funciona</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ================= 1. HERO ================= -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero__media" data-hero>
+        <!-- Primeiro frame (poster): único asset com fetchpriority="high". Em conexão lenta ou reduced-motion, fica só ele. -->
+        <div class="hero__slide hero__slide--poster is-active" data-ph data-file="assets/hero/hero-poster.webp">
+          <img src="assets/hero/hero-poster.webp" alt="" width="1920" height="1080" fetchpriority="high">
+        </div>
+        <!-- Slide 1: vídeo (src só é aplicado pelo JS quando a conexão e o reduced-motion permitem) -->
+        <div class="hero__slide hero__slide--video" data-hero-slide data-ph data-file="assets/hero/hero-loop.mp4">
+          <video muted loop playsinline preload="metadata" poster="assets/hero/hero-poster.webp" data-src="assets/hero/hero-loop.mp4" aria-hidden="true"></video>
+        </div>
+        <!-- Slides 2–5: fotos (carregadas pelo JS quando o carrossel inicia) -->
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-01.webp"><img data-src="assets/hero/hero-01.webp" alt="" width="1920" height="1080"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-02.webp"><img data-src="assets/hero/hero-02.webp" alt="" width="1920" height="1080"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-03.webp"><img data-src="assets/hero/hero-03.webp" alt="" width="1920" height="1080"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-04.webp"><img data-src="assets/hero/hero-04.webp" alt="" width="1920" height="1080"></div>
+        <div class="hero__overlay"></div>
+      </div>
+
+      <div class="container hero__content">
+        <p class="eyebrow mono" data-reveal="fade-up">Uniformes gastronômicos</p>
+        <h1 class="hero__title" id="hero-title" data-reveal="line" data-reveal-delay="100">Sua equipe fala por você antes que qualquer prato saia da cozinha.</h1>
+        <p class="hero__sub" data-reveal="fade-up" data-reveal-delay="200">Novembro chega, o movimento aumenta. Décimo terceiro, férias, confraternizações, e quem deixa a uniformização pra última hora corre o risco de começar a alta temporada com a equipe desuniformizada.</p>
+        <p class="hero__attrs mono" data-reveal="fade-up" data-reveal-delay="300"><span class="hero__attr">Produção própria</span> <span class="hero__sep" aria-hidden="true">•</span> <span class="hero__attr">Prazo médio de 30 dias</span> <span class="hero__sep" aria-hidden="true">•</span> <span class="hero__attr">Personalização sob encomenda</span></p>
+        <div data-reveal="fade-up" data-reveal-delay="400">
+          <a class="btn btn--orange btn--lg" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Falar com um consultor agora pelo WhatsApp (abre em nova aba)">Falar com um consultor agora <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#urgencia" aria-label="Rolar para o conteúdo">
+        <span class="mono">Role</span><span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <!-- ================= 2. URGÊNCIA ================= -->
+    <section class="urgency section" id="urgencia" aria-labelledby="urgency-title">
+      <div class="container urgency__grid">
+        <div class="urgency__data" data-reveal="fade-up">
+          <p class="urgency__num mono"><span data-count-to="30">30</span></p>
+          <p class="urgency__label mono">DIAS — PRAZO MÉDIO DE PRODUÇÃO</p>
+        </div>
+        <div class="urgency__text">
+          <h2 class="urgency__title" id="urgency-title" data-reveal="words">Cada semana de espera é uma semana a menos antes do movimento.</h2>
+          <p class="urgency__body" data-reveal="fade-up">Da aprovação à ficha técnica, até a produção em si, a G4 leva em média 30 dias para entregar. Fechar até 15/10 coloca sua equipe pronta antes do movimento decolar. Depois dessa data, a fila aperta, porque não é só a sua demanda que cresce nessa época, é a agenda de produção do setor inteiro que trava ao mesmo tempo.</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="timeline-mini mono" data-reveal="draw" aria-hidden="true">
+          <span class="timeline-mini__track"><span class="timeline-mini__fill"></span></span>
+          <span class="timeline-mini__mark timeline-mini__mark--start">HOJE</span>
+          <span class="timeline-mini__mark timeline-mini__mark--mid">15/10</span>
+          <span class="timeline-mini__mark timeline-mini__mark--end">NOVEMBRO/DEZEMBRO</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3. PRODUTOS ================= -->
+    <section class="products section" id="produtos" aria-labelledby="products-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="products-title" data-reveal="fade-up">Cada função da sua equipe, uma peça pensada pra ela.</h2>
+          <p class="section-sub" data-reveal="fade-up" data-reveal-delay="100">Cozinha e salão têm rotinas diferentes. Cada peça responde à função de quem a veste.</p>
+        </header>
+
+        <div class="tabs mono" role="tablist" aria-label="Linha de produtos" data-reveal="fade-up" data-reveal-delay="200">
+          <button class="tabs__btn" role="tab" id="tab-cozinha" aria-controls="panel-cozinha" aria-selected="true">COZINHA</button>
+          <span class="tabs__sep" aria-hidden="true">/</span>
+          <button class="tabs__btn" role="tab" id="tab-salao" aria-controls="panel-salao" aria-selected="false" tabindex="-1">SALÃO</button>
+        </div>
+
+        <div class="products__panel" role="tabpanel" id="panel-cozinha" aria-labelledby="tab-cozinha" tabindex="0" data-panel>
+          <ul class="cards cards--4">
+            <li class="card" data-reveal="fade-up">
+              <div class="card__media" data-ph data-file="assets/produtos/cozinha-dolma.webp">
+                <img src="assets/produtos/cozinha-dolma.webp" alt="Chef de cozinha vestindo dólmã em serviço" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 01 — COZINHA</p>
+              <h3 class="card__name">Dólmã (jaleco de chef)</h3>
+              <p class="card__desc">Presença e autoridade na cozinha, com caimento que aguenta o ritmo do serviço.</p>
+            </li>
+            <li class="card" data-reveal="fade-up" data-reveal-delay="100">
+              <div class="card__media" data-ph data-file="assets/produtos/cozinha-touca.webp">
+                <img src="assets/produtos/cozinha-touca.webp" alt="Cozinheira usando touca personalizada durante o preparo" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 02 — COZINHA</p>
+              <h3 class="card__name">Toucas</h3>
+              <p class="card__desc">Padrão de higiene visível, personalizadas com a marca da casa.</p>
+            </li>
+            <li class="card" data-reveal="fade-up" data-reveal-delay="200">
+              <div class="card__media" data-ph data-file="assets/produtos/cozinha-calca.webp">
+                <img src="assets/produtos/cozinha-calca.webp" alt="Cozinheiro em pé na bancada usando calça de chef" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 03 — COZINHA</p>
+              <h3 class="card__name">Calças de chef</h3>
+              <p class="card__desc">Conforto para jornadas longas em pé.</p>
+            </li>
+            <li class="card" data-reveal="fade-up" data-reveal-delay="300">
+              <div class="card__media" data-ph data-file="assets/produtos/cozinha-avental.webp">
+                <img src="assets/produtos/cozinha-avental.webp" alt="Profissional de cozinha usando avental com a marca da casa" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 04 — COZINHA</p>
+              <h3 class="card__name">Aventais</h3>
+              <p class="card__desc">Proteção e identidade visual em um só lugar.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="products__panel" role="tabpanel" id="panel-salao" aria-labelledby="tab-salao" tabindex="0" data-panel hidden>
+          <ul class="cards cards--2">
+            <li class="card">
+              <div class="card__media" data-ph data-file="assets/produtos/salao-camisa.webp">
+                <img src="assets/produtos/salao-camisa.webp" alt="Garçom de camisa social atendendo uma mesa" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 05 — SALÃO</p>
+              <h3 class="card__name">Camisa social</h3>
+              <p class="card__desc">A primeira impressão do seu cliente, com o padrão que a casa merece.</p>
+            </li>
+            <li class="card">
+              <div class="card__media" data-ph data-file="assets/produtos/salao-avental.webp">
+                <img src="assets/produtos/salao-avental.webp" alt="Atendente de salão usando avental durante o serviço" width="800" height="1000" loading="lazy">
+              </div>
+              <p class="card__ref mono">REF. 06 — SALÃO</p>
+              <h3 class="card__name">Aventais de salão</h3>
+              <p class="card__desc">Funcionalidade sem abrir mão da estética.</p>
+            </li>
+          </ul>
+        </div>
+
+        <a class="link-arrow" href="#diferenciais" data-reveal="fade-up">Ver todos os diferenciais G4 <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- ================= 4. DIFERENCIAIS ================= -->
+    <section class="diffs section on-dark" id="diferenciais" aria-labelledby="diffs-title">
+      <div class="container">
+        <h2 id="diffs-title" data-reveal="fade-up">Por que a G4</h2>
+        <ol class="diffs__list">
+          <li class="diff" data-reveal="fade-up">
+            <span class="diff__num mono" aria-hidden="true">01</span>
+            <h3 class="diff__title">Produção própria</h3>
+            <p class="diff__text">Sem intermediário, sem depender de terceiros para cumprir prazo.</p>
+          </li>
+          <li class="diff" data-reveal="fade-up" data-reveal-delay="100">
+            <span class="diff__num mono" aria-hidden="true">02</span>
+            <h3 class="diff__title">Personalização real</h3>
+            <p class="diff__text">Bordado computadorizado, silk-screen e sublimação, com peças sob encomenda.</p>
+          </li>
+          <li class="diff" data-reveal="fade-up" data-reveal-delay="200">
+            <span class="diff__num mono" aria-hidden="true">03</span>
+            <h3 class="diff__title">+<span data-count-to="11">11</span> anos de mercado</h3>
+            <p class="diff__text">Mais de uma década uniformizando negócios, do gastronômico ao industrial. Por isso sabemos o que muda de um segmento pro outro.</p>
+          </li>
+          <li class="diff" data-reveal="fade-up" data-reveal-delay="300">
+            <span class="diff__num mono" aria-hidden="true">04</span>
+            <h3 class="diff__title">Atendimento consultivo</h3>
+            <p class="diff__text">O orçamento leva em conta o que sua equipe realmente faz no dia a dia, não só o tamanho do pedido.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= 5. PROVA SOCIAL ================= -->
+    <section class="clients section" id="clientes" aria-labelledby="clients-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="clients-title" data-reveal="fade-up">Quem já vestiu a equipe com a G4</h2>
+          <p class="section-sub" data-reveal="fade-up" data-reveal-delay="100">Um dos nomes mais conceituados da gastronomia em Cascavel confiou na G4 para uniformizar sua equipe, do salão à cozinha.</p>
+        </header>
+
+        <!-- Componente .case: pode ser trocado ou complementado pelo bloco .testimonial abaixo.
+             O nome do cliente NÃO aparece aqui (nem em legenda, alt ou nome de arquivo). -->
+        <div class="case" data-reveal="fade">
+          <div class="case__gallery">
+            <figure class="case__item case__item--main" data-ph data-file="assets/case/case-01.webp">
+              <img src="assets/case/case-01.webp" alt="Equipe de cozinha uniformizada pela G4 durante o serviço" width="1200" height="1500" loading="lazy">
+            </figure>
+            <figure class="case__item" data-ph data-file="assets/case/case-02.webp">
+              <img src="assets/case/case-02.webp" alt="Equipe de salão uniformizada pela G4 atendendo clientes" width="1200" height="900" loading="lazy">
+            </figure>
+            <figure class="case__item" data-ph data-file="assets/case/case-03.webp">
+              <img src="assets/case/case-03.webp" alt="Detalhe da personalização bordada no uniforme" width="1200" height="900" loading="lazy">
+            </figure>
+            <figure class="case__item" data-ph data-file="assets/case/case-04.webp">
+              <img src="assets/case/case-04.webp" alt="Equipe completa, da cozinha ao salão, vestindo os uniformes G4" width="1200" height="900" loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <!-- ===== Modelo de depoimento (descomente e preencha quando houver) =====
+        <figure class="testimonial" data-reveal="fade-up">
+          <div class="testimonial__media" data-ph data-file="assets/case/depoimento.webp">
+            <img src="assets/case/depoimento.webp" alt="Foto de [NOME], [CARGO] do [RESTAURANTE]" width="800" height="1000" loading="lazy">
+            ou vídeo curto:
+            <video src="assets/case/depoimento.mp4" poster="assets/case/depoimento.webp" controls playsinline preload="none"></video>
+          </div>
+          <blockquote class="testimonial__quote">
+            <p>[CITAÇÃO DO CLIENTE]</p>
+          </blockquote>
+          <figcaption class="testimonial__who">
+            <span class="testimonial__name">[NOME]</span>
+            <span class="testimonial__role mono">[CARGO] — [RESTAURANTE]</span>
+          </figcaption>
+        </figure>
+        ===================================================================== -->
+
+        <div class="logos">
+          <p class="logos__label mono">Quem já atendemos</p>
+          <div class="marquee" data-marquee>
+            <ul class="marquee__track" role="list">
+              <li class="logo" data-ph data-file="assets/clientes/quinta-da-oliva.svg"><img src="assets/clientes/quinta-da-oliva.svg" alt="Quinta da Oliva" width="160" height="64" loading="lazy"><span class="logo__name">Quinta da Oliva</span></li>
+              <li class="logo" data-ph data-file="assets/clientes/pateo-du-fogo.svg"><img src="assets/clientes/pateo-du-fogo.svg" alt="Pateo Du Fogo" width="160" height="64" loading="lazy"><span class="logo__name">Pateo Du Fogo</span></li>
+              <li class="logo" data-ph data-file="assets/clientes/luigia-pizzaria.svg"><img src="assets/clientes/luigia-pizzaria.svg" alt="Luigia Pizzaria" width="160" height="64" loading="lazy"><span class="logo__name">Luigia Pizzaria</span></li>
+              <li class="logo" data-ph data-file="assets/clientes/don-ritter.svg"><img src="assets/clientes/don-ritter.svg" alt="Don Ritter" width="160" height="64" loading="lazy"><span class="logo__name">Don Ritter</span></li>
+              <li class="logo" data-ph data-file="assets/clientes/dom-aureo.svg"><img src="assets/clientes/dom-aureo.svg" alt="Dom Aureo" width="160" height="64" loading="lazy"><span class="logo__name">Dom Aureo</span></li>
+            </ul>
+            <!-- A cópia da lista para o loop infinito é gerada pelo JS (aria-hidden). -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 6. COMO FUNCIONA ================= -->
+    <section class="steps section" id="como-funciona" aria-labelledby="steps-title">
+      <div class="container">
+        <h2 id="steps-title" data-reveal="fade-up">Do primeiro contato à entrega</h2>
+        <div class="steps__wrap" data-steps>
+          <span class="steps__track" aria-hidden="true"><span class="steps__fill"></span></span>
+          <ol class="steps__list">
+            <li class="step"><span class="step__num mono" aria-hidden="true">01</span><h3 class="step__title">Fale com um consultor</h3><p class="step__text">Você conta o que precisa, a gente já direciona pro produto certo.</p></li>
+            <li class="step"><span class="step__num mono" aria-hidden="true">02</span><h3 class="step__title">Orçamento</h3><p class="step__text">Proposta personalizada para o seu negócio.</p></li>
+            <li class="step"><span class="step__num mono" aria-hidden="true">03</span><h3 class="step__title">Ficha de aprovação</h3><p class="step__text">Você valida modelo, cores e personalização.</p></li>
+            <li class="step"><span class="step__num mono" aria-hidden="true">04</span><h3 class="step__title">Ficha técnica</h3><p class="step__text">Especificação final antes da produção.</p></li>
+            <li class="step"><span class="step__num mono" aria-hidden="true">05</span><h3 class="step__title">Produção</h3><p class="step__text">Feita na própria estrutura da G4.</p></li>
+            <li class="step"><span class="step__num mono" aria-hidden="true">06</span><h3 class="step__title">Entrega</h3><p class="step__text">Sua equipe pronta para o movimento.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 7. CTA FINAL ================= -->
+    <section class="final section on-orange" id="cta-final" aria-labelledby="final-title">
+      <div class="container final__inner">
+        <h2 id="final-title" data-reveal="fade-up">Garanta sua equipe uniformizada antes da alta temporada</h2>
+        <p class="final__sub" data-reveal="fade-up" data-reveal-delay="100">Feche seu pedido até 15/10 e receba com prioridade de produção, antes que a fila do fim de ano comece.</p>
+
+        <div class="final__countdown mono" data-countdown="blocks" data-reveal="fade-up" data-reveal-delay="200" role="timer" aria-label="Tempo restante até 15/10">
+          <div class="cd-block"><span class="cd-block__num" data-cd="d">00</span><span class="cd-block__label">DIAS</span></div>
+          <div class="cd-block"><span class="cd-block__num" data-cd="h">00</span><span class="cd-block__label">HORAS</span></div>
+          <div class="cd-block"><span class="cd-block__num" data-cd="m">00</span><span class="cd-block__label">MIN</span></div>
+          <div class="cd-block"><span class="cd-block__num" data-cd="s">00</span><span class="cd-block__label">SEG</span></div>
+        </div>
+
+        <div data-reveal="fade-up" data-reveal-delay="300">
+          <a class="btn btn--navy btn--lg" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Falar com um consultor agora pelo WhatsApp (abre em nova aba)">Falar com um consultor agora <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= RODAPÉ ================= -->
+  <footer class="footer on-dark">
+    <div class="container footer__inner">
+      <!-- TODO: trocar pelo logo completo em SVG branco (assets/brand/logo-g4-branco.svg). -->
+      <img class="footer__logo" src="assets/brand/simbolo-g4.svg" alt="G4 Uniformes" width="44" height="44" loading="lazy">
+      <p class="footer__text">Especialistas em uniformização empresarial desde 2015.</p>
+      <ul class="footer__social">
+        <li>
+          <a href="#TODO-instagram" target="_blank" rel="noopener" aria-label="G4 Uniformes no Instagram (abre em nova aba)">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#TODO-linkedin" target="_blank" rel="noopener" aria-label="G4 Uniformes no LinkedIn (abre em nova aba)">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm7 0h3.8v1.6h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4V9.5z"/></svg>
+          </a>
+        </li>
+      </ul>
+      <p class="footer__copy">© 2026 G4 Uniformes · Cascavel/PR</p>
+    </div>
+  </footer>
+
+  <!-- Botão flutuante (só mobile) -->
+  <a class="float-cta btn btn--orange" id="float-cta" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Orçamento no WhatsApp (abre em nova aba)" aria-hidden="true" tabindex="-1">Orçamento no WhatsApp</a>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>
