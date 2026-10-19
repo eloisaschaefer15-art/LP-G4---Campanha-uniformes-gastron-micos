@@ -104,7 +104,7 @@ Enquanto um arquivo não existe, o lugar dele aparece como bloco cinza com o nom
 | | `hero-01.webp` … `hero-04.webp` | Hero, slides 2 a 5 | WebP 1920×1080 |
 | `assets/produtos/` | `cozinha-dolma`, `cozinha-touca`, `cozinha-calca`, `cozinha-avental`, `salao-camisa`, `salao-avental` (`.webp`) | Seção Produtos | WebP 800×1000 (4:5), peça **em uso** |
 | `assets/case/` | — | **Não usada nesta versão** (o case saiu da seção Clientes; dá para recuperar o bloco com `git show 0f895e4:index.html`) | — |
-| `assets/clientes/` | `quinta-da-oliva`, `pateo-du-fogo`, `luigia-pizzaria`, `don-ritter`, `dom-aureo` (`.svg`) | Letreiro "Quem já atendemos" | SVG **monocromático em `#0A2447`** |
+| `assets/clientes/` | `quinta-da-oliva`, `pateo-do-fogo`, `luigia-pizzaria`, `don-ritter`, `dom-aureo` (`.svg`) | Letreiro "Quem já atendemos" | SVG **monocromático em `#0A2447`** |
 
 Observações:
 - **Logo:** no celular (< 480px) o menu mostra só o símbolo, porque o logo completo não cabe junto do botão de orçamento e do menu. As cores dos SVGs são as mesmas da LP (`#0A2447` e `#FF7713`).
