@@ -24,8 +24,8 @@ python -m http.server 8000
 No `index.html`, o CSS e o JS são carregados com um número de versão:
 
 ```html
-<link rel="stylesheet" href="css/style.css?v=20261019b">
-<script src="js/script.js?v=20261019b" defer></script>
+<link rel="stylesheet" href="css/style.css?v=20261019c">
+<script src="js/script.js?v=20261019c" defer></script>
 ```
 
 Sempre que mudar `css/style.css` ou `js/script.js` (inclusive o número do WhatsApp ou a data-limite), troque esse número nos dois lugares (ex.: `20261014b`, ou a data do dia). Sem isso, quem já visitou a página pode continuar vendo a versão antiga guardada no navegador, como o contador contando até a data anterior.
@@ -93,11 +93,12 @@ Enquanto um arquivo não existe, o lugar dele aparece como bloco cinza com o nom
 
 | Pasta | Arquivos esperados | Onde aparece | Formato sugerido |
 |---|---|---|---|
-| `assets/brand/` | `logo-g4-branco.svg` | Menu e rodapé (hoje usam `simbolo-g4.svg`, ver abaixo) | SVG branco |
-| | `logo-g4.svg` | Reserva (versão para fundo claro) | SVG |
+| `assets/brand/` | `logo-g4-branco.svg` ✓ | Menu (a partir de 480px) e rodapé | SVG (G4 laranja + uniformes branco), extraído da folha "Proposta" do Figma |
+| | `logo-g4.svg` ✓ | Reserva (versão navy + laranja, para fundo claro) | SVG |
+| | `simbolo-g4.svg` ✓ | Menu no celular (< 480px) e favicon | SVG |
 | | `favicon.svg` | Aba do navegador (já existe: símbolo G4 exportado do Figma) | SVG |
 | | `apple-touch-icon.png` | Ícone ao salvar no iPhone | PNG 180×180 |
-| | `og-image.jpg` | Prévia do link no WhatsApp/redes | JPG 1200×630 |
+| | `og-image.jpg` ✓ | Prévia do link no WhatsApp/redes | JPG 1200×630 (foto do hero + logo + "Feche até 31/10"). **Tem a data escrita:** se o prazo mudar, a imagem precisa ser refeita |
 | `assets/hero/` | `hero-loop.mp4` | Hero, 1º slide | MP4 H.264, sem áudio, ≤ 4 MB, 1920×1080 |
 | | `hero-poster.webp` | Hero, primeiro frame e versão estática | WebP 1920×1080 |
 | | `hero-01.webp` … `hero-04.webp` | Hero, slides 2 a 5 | WebP 1920×1080 |
@@ -106,17 +107,16 @@ Enquanto um arquivo não existe, o lugar dele aparece como bloco cinza com o nom
 | `assets/clientes/` | `quinta-da-oliva`, `pateo-du-fogo`, `luigia-pizzaria`, `don-ritter`, `dom-aureo` (`.svg`) | Letreiro "Quem já atendemos" | SVG **monocromático em `#0A2447`** |
 
 Observações:
-- **Logo completo:** o arquivo do Figma só expôs o símbolo (ícone laranja), salvo em `assets/brand/simbolo-g4.svg`. Quando tiver `logo-g4-branco.svg`, troque o `src` no menu e no rodapé do `index.html` (há um comentário `TODO` em cada lugar) e ajuste `width`/`height`.
+- **Logo:** no celular (< 480px) o menu mostra só o símbolo, porque o logo completo não cabe junto do botão de orçamento e do menu. As cores dos SVGs são as mesmas da LP (`#0A2447` e `#FF7713`).
 - **Nomes do case:** se o case voltar, o nome do cliente não aparece em nenhum lugar da página, nem no nome dos arquivos. Mantenha `case-01…04`.
 - **Logos de clientes:** enquanto o SVG não existir, aparece o nome em texto. Os logos não ganham cor no hover, então exporte já em navy.
 - **Imagens com proporção diferente** são recortadas para caber (`object-fit: cover`); se mudar o tamanho real, atualize `width`/`height` no `<img>`.
-- **og-image:** o WhatsApp não lê caminho relativo. No deploy, troque `assets/brand/og-image.jpg` nas tags `og:image` e `twitter:image` pela URL completa do site.
+- **og-image:** as tags `og:image` e `twitter:image` já usam a URL completa do GitHub Pages (o WhatsApp não lê caminho relativo). Ao ligar o domínio próprio, troque o início do endereço.
 - **Depoimento:** há um modelo pronto e comentado na seção Clientes do `index.html` (citação, nome, cargo, restaurante, foto ou vídeo).
 
 ## Pendências (`TODO` no código)
 
 - Endereço e CEP no JSON-LD (`<head>` do `index.html`)
-- `og-image.jpg` (1200×630) em `assets/brand/` — sem ela a prévia do link no WhatsApp sai sem imagem
 - Ao ligar o domínio próprio: trocar o endereço do GitHub Pages em `og:image`, `og:url`, `twitter:image` e no JSON-LD (`index.html`)
 - Meta Pixel / Google Tag: espaço comentado no `<head>`
 - Domínio próprio (arquivo `CNAME` só na Etapa 5)

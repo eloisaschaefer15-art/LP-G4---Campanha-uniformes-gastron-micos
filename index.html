@@ -35,7 +35,7 @@
   -->
 
   <!-- ?v= força o navegador a baixar a versão nova. Ao editar o CSS ou o JS, troque o número (ex.: data + letra). -->
-  <link rel="stylesheet" href="css/style.css?v=20261019b">
+  <link rel="stylesheet" href="css/style.css?v=20261019c">
 
   <script>
     // Marca JS ativo (liga os estados iniciais das animações) e troca assets ausentes por placeholders.
@@ -99,8 +99,9 @@
     <nav class="nav" aria-label="Principal">
       <div class="container nav__inner">
         <a class="nav__logo" href="#inicio" aria-label="G4 Uniformes, voltar ao início">
-          <!-- TODO: trocar pelo logo completo em SVG branco (assets/brand/logo-g4-branco.svg). O Figma só expôs o símbolo. -->
-          <img src="assets/brand/simbolo-g4.svg" alt="" width="36" height="36">
+          <!-- Logo completo (G4 laranja + uniformes branco) a partir de 480px; no celular, só o símbolo para caber com o botão e o menu -->
+          <img class="nav__logo-full" src="assets/brand/logo-g4-branco.svg" alt="" width="189" height="36">
+          <img class="nav__logo-mark" src="assets/brand/simbolo-g4.svg" alt="" width="32" height="32">
         </a>
 
         <ul class="nav__links">
@@ -379,8 +380,7 @@
   <!-- ================= RODAPÉ ================= -->
   <footer class="footer on-dark">
     <div class="container footer__inner">
-      <!-- TODO: trocar pelo logo completo em SVG branco (assets/brand/logo-g4-branco.svg). -->
-      <img class="footer__logo" src="assets/brand/simbolo-g4.svg" alt="G4 Uniformes" width="44" height="44" loading="lazy">
+      <img class="footer__logo" src="assets/brand/logo-g4-branco.svg" alt="G4 Uniformes" width="210" height="40" loading="lazy">
       <p class="footer__text">Especialistas em uniformização empresarial desde 2015.</p>
       <ul class="footer__social">
         <li>
@@ -401,6 +401,6 @@
   <!-- Botão flutuante (só mobile) -->
   <a class="float-cta btn btn--orange" id="float-cta" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Orçamento no WhatsApp (abre em nova aba)" aria-hidden="true" tabindex="-1">Orçamento no WhatsApp</a>
 
-  <script src="js/script.js?v=20261019b" defer></script>
+  <script src="js/script.js?v=20261019c" defer></script>
 </body>
 </html>

@@ -212,7 +212,14 @@ h2 {
 .topbar.is-scrolled .nav { box-shadow: 0 1px 0 rgba(255,255,255,0.08); }
 
 .nav__logo { display: flex; align-items: center; margin-right: auto; }
-.nav__logo img { width: 32px; height: 32px; transition: width 350ms var(--ease), height 350ms var(--ease); }
+.nav__logo img { display: block; transition: height 350ms var(--ease), width 350ms var(--ease); }
+/* Celular: só o símbolo (o logo completo não cabe com o botão de orçamento e o menu) */
+.nav__logo-mark { width: 32px; height: 32px; }
+.nav__logo-full { display: none !important; }
+@media (min-width: 480px) {
+  .nav__logo-mark { display: none !important; }
+  .nav__logo-full { display: block !important; width: auto; height: 28px; }
+}
 
 .nav__links { display: none; }
 .nav__cta { min-height: 40px; padding: 8px 14px; font-size: 0.875rem; }
@@ -243,8 +250,8 @@ h2 {
 
 @media (min-width: 1024px) {
   .nav__inner { gap: 0; }
-  .nav__logo img { width: 40px; height: 40px; }
-  .topbar.is-scrolled .nav__logo img { width: 32px; height: 32px; }
+  .nav__logo-full { height: 36px; }
+  .topbar.is-scrolled .nav__logo-full { height: 30px; }
   .nav__links { display: flex; gap: 32px; margin-right: 48px; }
   .nav__links a {
     position: relative; padding: 8px 0;
@@ -658,7 +665,7 @@ html:not(.js) .steps__fill { transform: none; }
    ===================================================================== */
 .footer { background: var(--navy); color: #fff; padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); }
 .footer__inner { display: grid; gap: 24px; }
-.footer__logo { width: 44px; height: 44px; }
+.footer__logo { width: auto; height: 40px; }
 /* Cabe em uma linha no desktop; no mobile quebra em duas linhas equilibradas */
 .footer__text { max-width: 58ch; text-wrap: balance; color: rgba(255,255,255,0.86); }
 .footer__social { display: flex; gap: 8px; }
