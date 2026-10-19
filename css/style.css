@@ -65,6 +65,11 @@
      degradê #16519E → #0A2447 + símbolo G4 gigante (#103C75, 60%) saindo pelas bordas */
   --navy-top: #16519E;
 
+  /* Texto "forte" sobre fundo claro (títulos, nomes de produto, etapas, abas, rótulos).
+     Em teste: navy (#0A2447) x preto quente (--ink #1C1A18) x cinza escuro (--neutral-800 #383838).
+     Texto sobre laranja continua sempre --navy (regra de contraste). */
+  --text-strong: var(--neutral-800); /* cinza escuro #383838 (escolhido no teste navy x preto x cinza) */
+
   /* Header fixo = barra de contagem + menu.
      --countbar-h é medido pelo JS (0 se a barra estiver escondida). */
   --countbar-h: 36px;
@@ -126,7 +131,7 @@ h2 {
   font-size: clamp(2rem, 1.3rem + 3vw, 3.5rem);
   line-height: 1.08;
   letter-spacing: -0.015em;
-  color: var(--navy);
+  color: var(--text-strong);
   max-width: 20ch;
 }
 .section-head { margin-bottom: 48px; }
@@ -164,14 +169,29 @@ h2 {
   min-height: 48px; padding: 12px 22px;
   font-family: var(--font); font-weight: var(--w-bold); font-size: 1rem; line-height: 1.2;
   text-decoration: none; border-radius: var(--radius);
-  transition: background-color 250ms var(--ease), color 250ms var(--ease), transform 250ms var(--ease);
+  background-size: 200% 100%; background-position: 0 0;
+  transition: background-position 450ms var(--ease), color 250ms var(--ease), transform 250ms var(--ease), box-shadow 250ms var(--ease);
 }
 .btn--lg { min-height: 56px; padding: 16px 28px; font-size: 1.0625rem; }
 /* Texto sobre laranja é sempre navy (5,8:1). Branco sobre laranja reprova no AA. */
-.btn--orange { background: var(--orange); color: var(--navy); }
-.btn--orange:hover { background: #FF8A33; }
-.btn--navy { background: var(--navy); color: #fff; }
-.btn--navy:hover { background: #122F59; }
+/* Degradê na linha do botão do material de social media. No hover, o degradê desliza para o lado
+   mais claro, o botão sobe 2px e ganha um brilho da própria cor. */
+.btn--orange {
+  background-color: var(--orange);
+  background-image: linear-gradient(100deg, #FF7713 0%, #FF9445 50%, #FFB47E 100%);
+  color: var(--navy);
+}
+.btn--navy {
+  background-color: var(--navy);
+  background-image: linear-gradient(100deg, #0A2447 0%, #16519E 50%, #2A6BC4 100%);
+  color: #fff;
+}
+@media (hover: hover) {
+  .btn--orange:hover, .btn--navy:hover { background-position: 100% 0; transform: translateY(-2px); }
+  .btn--orange:hover { box-shadow: 0 12px 28px -10px rgba(255,119,19,0.75); }
+  .btn--navy:hover   { box-shadow: 0 12px 28px -10px rgba(22,81,158,0.8); }
+}
+.btn:active { transform: translateY(0); box-shadow: none; }
 .btn .arrow { transition: transform 300ms var(--ease); }
 .btn:hover .arrow { transform: translateX(4px); }
 
@@ -179,7 +199,7 @@ h2 {
 .link-arrow {
   display: inline-flex; align-items: center; gap: 10px;
   margin-top: 48px;
-  color: var(--navy); font-weight: var(--w-bold); font-size: 1.0625rem;
+  color: var(--text-strong); font-weight: var(--w-bold); font-size: 1.0625rem;
   text-decoration: underline; text-decoration-color: var(--orange);
   text-decoration-thickness: 2px; text-underline-offset: 6px;
 }
@@ -207,6 +227,11 @@ h2 {
   .countbar__inner { gap: 14px; }
 }
 
+.scroll-progress { position: relative; height: 2px; background: rgba(255,255,255,0.08); }
+.scroll-progress span {
+  position: absolute; inset: 0; background: var(--orange);
+  transform-origin: left; transform: scaleX(var(--sp, 0));
+}
 .nav { background: var(--navy); color: #fff; transition: box-shadow 300ms var(--ease); }
 .nav__inner {
   display: flex; align-items: center; gap: 12px;
@@ -223,7 +248,13 @@ h2 {
 .nav__logo-full { display: none !important; }
 @media (min-width: 480px) {
   .nav__logo-mark { display: none !important; }
-  .nav__logo-full { display: block !important; width: auto; height: 28px; }
+  .nav__logo-full {
+    display: block !important; width: auto; height: 28px;
+    clip-path: inset(0 0 0 0); transition: clip-path 450ms var(--ease), height 350ms var(--ease);
+  }
+  /* Ao rolar (referência anthropic.com): o texto sai como cortina e fica só o símbolo.
+     O símbolo ocupa 18,9% da largura do logo e o "G4" começa em 22,4%: corte em 20,5%. */
+  .topbar.is-scrolled .nav__logo-full { clip-path: inset(0 79.5% 0 0); }
 }
 
 .nav__links { display: none; }
@@ -276,18 +307,25 @@ h2 {
 }
 
 /* ---------- Fundo navy com profundidade ----------
-   Diferenciais, faixa do "30 dias" e rodapé. O símbolo fica à direita, recortado pelas bordas. */
-.diffs, .urgency__spec, .footer {
+   Diferenciais, faixa do "30 dias" e seção 7: degradê do material de social media. */
+.diffs, .urgency__spec, .final {
   background-color: var(--navy);
+  background-image: linear-gradient(180deg, var(--navy-top) -30%, var(--navy) 100%);
+}
+
+/* ---------- Ícone G4 como elemento da diagramação ----------
+   Como no material de social media: o símbolo é ampliado até o VAZADO do G envolver o bloco de
+   conteúdo da seção (as faixas do G abraçam a informação). O js/script.js mede o conteúdo e preenche
+   --mk-size / --mk-x / --mk-y para cada largura de tela (sem JS, o ícone não aparece). */
+.diffs, .final {
+  position: relative; /* referência para o JS medir o conteúdo */
   background-image:
     url("../assets/brand/g4-marca-fundo.svg"),
     linear-gradient(180deg, var(--navy-top) -30%, var(--navy) 100%);
   background-repeat: no-repeat;
-  background-size: auto 140%, 100% 100%;
-  background-position: right -10% top 0, 0 0;
+  background-size: var(--mk-size, 0px) var(--mk-size, 0px), 100% 100%;
+  background-position: var(--mk-x, 0px) calc(var(--mk-y, 0px) + var(--mk-py, 0px)), 0 0;
 }
-.urgency__spec { background-size: auto 220%, 100% 100%; background-position: right -6% top 10%, 0 0; }
-.footer { background-size: auto 260%, 100% 100%; background-position: right -4% top 0, 0 0; }
 
 /* =====================================================================
    1. HERO
@@ -302,7 +340,9 @@ h2 {
   /* Altura real do header no topo da página + respiro mínimo de 32px */
   padding-top: calc(var(--countbar-h) + var(--nav-h) + 32px);
 }
-.hero__media { position: absolute; inset: 0; }
+/* Rolagem: --hero-* vêm do js/script.js (desligado com reduced-motion). Sobra de 15% para o parallax. */
+.hero__media { position: absolute; inset: -15% 0; transform: translate3d(0, var(--hero-py, 0px), 0); will-change: transform; }
+.hero__content { opacity: var(--hero-o, 1); transform: translate3d(0, var(--hero-cy, 0px), 0); }
 .hero__slide {
   position: absolute; inset: 0; opacity: 0;
   transition: opacity 1000ms var(--ease);
@@ -367,24 +407,11 @@ h2 {
 }
 .hero__content .btn { margin-top: calc(var(--hs) + 8px); }
 
-.hero__scroll {
-  position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%);
-  display: none; flex-direction: column; align-items: center; gap: 8px;
-  font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.16em;
-  color: rgba(255,255,255,0.7); text-decoration: none;
-}
-.hero__scroll-line { width: 1px; height: 40px; background: rgba(255,255,255,0.3); position: relative; overflow: hidden; }
-.hero__scroll-line::after {
-  content: ""; position: absolute; left: 0; top: 0; width: 1px; height: 40%;
-  background: var(--orange); animation: scrollcue 2.2s var(--ease) infinite;
-}
-@keyframes scrollcue { from { transform: translateY(-100%); } to { transform: translateY(250%); } }
 
 @media (min-width: 768px) {
   .hero__content { padding-bottom: clamp(32px, 6vh, 140px); }
   .hero__sub { font-size: clamp(1.0625rem, 0.55rem + 1.5vh, 1.1875rem); }
   .hero__attrs { font-size: 0.8125rem; }
-  .hero__scroll { display: flex; }
 }
 @media (min-width: 1024px) {
   /* Texto em até 7 de 12 colunas; título e subtítulo usam a largura toda das 7 colunas
@@ -392,10 +419,10 @@ h2 {
   .hero__content > * { max-width: calc((100% / 12) * 7); }
   .hero__title, .hero__sub { max-width: calc((100% / 12) * 7); }
 }
-/* Telas baixas: o indicador de scroll sai para não disputar espaço com o CTA */
-@media (max-height: 720px) {
-  .hero__scroll { display: none; }
-}
+
+/* Rolagem: o hero em tela cheia encolhe até virar um card arredondado (--hi/--hb/--hr do JS).
+   O fundo claro da página aparece em volta, emendando com a seção seguinte. */
+.hero { clip-path: inset(0 var(--hi, 0px) var(--hb, 0px) var(--hi, 0px) round var(--hr, 0px)); }
 
 /* =====================================================================
    2. URGÊNCIA
@@ -450,6 +477,16 @@ h2 {
   .urgency__spec { padding: 40px; }
   .timeline-mini { font-size: 0.75rem; }
 }
+/* Desktop: título em 2 linhas e texto em 2 colunas, ambos na largura da faixa do "30 dias" */
+@media (min-width: 1024px) {
+  .urgency__title {
+    max-width: none; text-wrap: balance;
+    /* 2 linhas equilibradas; a mais longa encosta na largura da faixa (~14,8em por linha).
+       Largura útil = 100vw - 80px até o container chegar a 1240px. */
+    font-size: clamp(3rem, 6.75vw - 0.34rem, 5.2rem);
+  }
+  .urgency__body { max-width: none; columns: 2; column-gap: 48px; }
+}
 @media (min-width: 1024px) {
   .urgency__spec {
     margin-top: 80px; padding: 48px;
@@ -471,8 +508,8 @@ h2 {
   color: var(--neutral-600); border-bottom: 2px solid transparent;
   transition: color 250ms var(--ease), border-color 250ms var(--ease);
 }
-.tabs__btn[aria-selected="true"] { color: var(--navy); border-bottom-color: var(--orange); }
-.tabs__btn:hover { color: var(--navy); }
+.tabs__btn[aria-selected="true"] { color: var(--text-strong); border-bottom-color: var(--orange); }
+.tabs__btn:hover { color: var(--text-strong); }
 .tabs__sep { color: var(--warm-300); }
 
 /* Mobile: carrossel horizontal com scroll-snap mostrando parte do próximo card */
@@ -485,12 +522,13 @@ h2 {
 }
 .cards::-webkit-scrollbar { display: none; }
 .card { scroll-snap-align: start; }
-.card__media { aspect-ratio: 4 / 5; overflow: hidden; background: var(--warm-300); }
-.card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease); }
+.card__media { aspect-ratio: 4 / 5; overflow: hidden; background: var(--warm-300); border-radius: var(--radius-lg); isolation: isolate; /* mantém o canto arredondado no zoom do hover (Safari) */ }
+/* Rolagem: a foto desliza levemente dentro da caixa (--py vem do JS); escala 1.08 dá a sobra para o movimento */
+.card__media img { width: 100%; height: 100%; object-fit: cover; transform: translate3d(0, var(--py, 0px), 0) scale(var(--ps, 1.08)); transition: transform 700ms var(--ease); }
 .card__ref {
   position: relative; display: inline-block;
   margin-top: 20px; padding-bottom: 6px;
-  font-size: 0.6875rem; letter-spacing: 0.12em; color: var(--navy);
+  font-size: 0.6875rem; letter-spacing: 0.12em; color: var(--text-strong);
 }
 /* Marcador laranja no hover (o texto do rótulo continua navy) */
 .card__ref::after {
@@ -499,7 +537,7 @@ h2 {
   transition: transform 400ms var(--ease);
 }
 .card__name {
-  margin-top: 12px; font-weight: var(--w-bold); font-size: 1.375rem; line-height: 1.2; color: var(--navy);
+  margin-top: 12px; font-weight: var(--w-bold); font-size: 1.375rem; line-height: 1.2; color: var(--text-strong);
 }
 .card__desc {
   margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--warm-300);
@@ -507,7 +545,7 @@ h2 {
 }
 
 @media (hover: hover) {
-  .card:hover .card__media img { transform: scale(1.03); }
+  .card:hover .card__media img { --ps: 1.12; }
   .card:hover .card__ref::after { transform: scaleX(1); }
 }
 
@@ -521,6 +559,12 @@ h2 {
   .cards--4 { grid-template-columns: repeat(4, 1fr); }
   .cards--2 { grid-template-columns: repeat(2, 1fr); gap: 40px 40px; }
   .cards--2 .card__name { font-size: 1.75rem; }
+}
+
+/* Rolagem: no desktop, as colunas de peças andam em velocidades diferentes (--cy do JS).
+   Usa a propriedade "translate" para não brigar com o "transform" da animação de entrada. */
+@media (min-width: 1024px) {
+  .products .card { translate: 0 var(--cy, 0px); }
 }
 
 /* =====================================================================
@@ -562,10 +606,8 @@ h2 {
 }
 @media (min-width: 1024px) {
   .diffs__grid { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: start; }
-  .diffs h2 {
-    grid-column: 1 / span 4; margin-bottom: 0;
-    position: sticky; top: calc(var(--countbar-h) + var(--nav-h-scrolled) + 40px);
-  }
+  /* título fixo no topo da coluna (sem acompanhar a rolagem): o ícone ocupa o espaço embaixo dele */
+  .diffs h2 { grid-column: 1 / span 4; margin-bottom: 0; }
   .diffs__list { grid-column: 5 / span 8; }
 }
 
@@ -594,13 +636,13 @@ h2 {
 /* Depoimento (modelo, hoje comentado no HTML) */
 .testimonial { margin-top: 64px; display: grid; gap: 24px; }
 .testimonial__media { aspect-ratio: 4 / 5; background: var(--warm-300); overflow: hidden; max-width: 360px; }
-.testimonial__quote p { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.25; font-weight: var(--w-bold); color: var(--navy); }
-.testimonial__name { display: block; font-weight: var(--w-bold); color: var(--navy); }
+.testimonial__quote p { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); line-height: 1.25; font-weight: var(--w-bold); color: var(--text-strong); }
+.testimonial__name { display: block; font-weight: var(--w-bold); color: var(--text-strong); }
 .testimonial__role { display: block; font-size: 0.75rem; margin-top: 4px; color: var(--neutral-800); }
 
 /* Letreiro logo abaixo do título (o case com galeria saiu da seção) */
 .logos { margin-top: 8px; }
-.logos__label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 28px; }
+.logos__label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-strong); margin-bottom: 28px; }
 
 /* Letreiro de ponta a ponta da tela (sai do container), sem vão nas laterais em telas largas */
 .marquee { overflow: hidden; margin-inline: calc(50% - 50vw); }
@@ -619,7 +661,7 @@ h2 {
 .logo.is-missing img { display: none; }
 .logo.is-missing .logo__name {
   display: block; white-space: nowrap;
-  font-weight: var(--w-bold); font-size: 1.375rem; color: var(--navy);
+  font-weight: var(--w-bold); font-size: 1.375rem; color: var(--text-strong);
 }
 
 /* =====================================================================
@@ -645,8 +687,8 @@ h2 {
   transition: background-color 400ms var(--ease), border-color 400ms var(--ease);
 }
 .step.is-on::before { background: var(--orange); border-color: var(--orange); }
-.step__num { display: block; font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--navy); }
-.step__title { margin-top: 8px; font-weight: var(--w-bold); font-size: 1.25rem; line-height: 1.25; color: var(--navy); }
+.step__num { display: block; font-size: 0.8125rem; letter-spacing: 0.1em; color: var(--text-strong); }
+.step__title { margin-top: 8px; font-weight: var(--w-bold); font-size: 1.25rem; line-height: 1.25; color: var(--text-strong); }
 .step__text { margin-top: 6px; font-size: 1rem; }
 
 /* Sem JS ou com reduced-motion: tudo aceso */
@@ -662,29 +704,37 @@ html:not(.js) .steps__fill { transform: none; }
 }
 
 /* =====================================================================
-   7. CTA FINAL (única seção laranja; texto navy)
+   7. CTA FINAL — navy com degradê e ícone, como o card de social media.
+   O laranja fica só nos números da contagem e no botão (laranja sobre navy: 5,8:1).
    ===================================================================== */
-.final { background: var(--orange); color: var(--navy); }
-.final h2 { color: var(--navy); max-width: 22ch; }
-.final__sub { margin-top: 20px; max-width: 50ch; font-size: 1.125rem; font-weight: var(--w-medium); }
+.final { color: #fff; }
+.final h2 { color: #fff; max-width: 22ch; }
+.final__sub { margin-top: 20px; max-width: 50ch; font-size: 1.125rem; font-weight: var(--w-medium); color: rgba(255,255,255,0.86); }
 .final__countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 48px; max-width: 640px; }
-.cd-block { border-top: 2px solid var(--navy); padding-top: 12px; }
+.cd-block { border-top: 2px solid rgba(255,255,255,0.3); padding-top: 12px; }
 .cd-block__num {
   display: block; font-size: clamp(2.5rem, 1.6rem + 4vw, 4.5rem); line-height: 1; font-weight: 500;
-  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--orange);
 }
-.cd-block__label { display: block; margin-top: 8px; font-size: 0.6875rem; letter-spacing: 0.12em; }
+.cd-block__label { display: block; margin-top: 8px; font-size: 0.6875rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.8); }
 .final .btn { margin-top: 48px; }
 .final.is-expired .final__countdown { display: none; }
 
 @media (min-width: 768px) {
   .final__countdown { gap: 24px; }
 }
+/* Desktop: bloco com ~600px, quase quadrado, na mesma proporção do vazado do G.
+   Assim o símbolo envolve o conteúdo como no card de social media, e a parte direita
+   do G ocupa as colunas vazias. */
+@media (min-width: 1024px) {
+  .final__inner > *, .final h2 { max-width: 600px; }
+}
 
 /* =====================================================================
    RODAPÉ
    ===================================================================== */
-.footer { background-color: var(--navy); color: #fff; padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); }
+/* Navy liso (#0A2447): continua o fim do degradê da seção 7, separado só por uma linha fina */
+.footer { background-color: var(--navy); border-top: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); }
 .footer__inner { display: grid; gap: 24px; }
 .footer__logo { width: auto; height: 40px; }
 /* Cabe em uma linha no desktop; no mobile quebra em duas linhas equilibradas */
@@ -755,6 +805,10 @@ html:not(.js) .steps__fill { transform: none; }
   /* Linha que se desenha da esquerda para a direita */
   .js [data-reveal="draw"] .timeline-mini__fill { transform: scaleX(0); transition: transform 1200ms var(--ease) 200ms; }
   .js [data-reveal="draw"].is-in .timeline-mini__fill { transform: scaleX(1); }
+  /* Com o movimento ligado à rolagem (classe .motion no <html>), a linha acompanha o scroll */
+  .motion .timeline-mini__fill, .motion [data-reveal="draw"] .timeline-mini__fill, .motion [data-reveal="draw"].is-in .timeline-mini__fill {
+    transform: scaleX(var(--tl, 0)); transition: none;
+  }
 
   /* Letreiro só corre com movimento permitido */
 }

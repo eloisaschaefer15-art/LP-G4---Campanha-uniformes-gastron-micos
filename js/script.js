@@ -26,6 +26,17 @@ const CONFIG = {
   const root = document.documentElement;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const prefersReduced = () => reducedMotion.matches;
+  // Compartilhado entre o ícone G4 (posição-base) e o laço de rolagem (animação em cima da base)
+  const MARKS = new Map();
+  let requestMotion = null;
+  function writeMark(section, k, py) {
+    const m = MARKS.get(section);
+    if (!m) return;
+    const s = m.s * k;
+    section.style.setProperty("--mk-size", (100 * s).toFixed(1) + "px");
+    section.style.setProperty("--mk-x", (m.cx - (m.cx - m.x) * k).toFixed(1) + "px");
+    section.style.setProperty("--mk-y", (m.cy - (m.cy - m.y) * k + py).toFixed(1) + "px");
+  }
 
   /* ---------- 2. Canal (?c=) + sessionStorage ---------- */
   function getChannel() {
@@ -189,9 +200,12 @@ const CONFIG = {
   /* ---------- 6. Observer genérico de animações ---------- */
   function splitLines(el) {
     // Quebra o título em palavras, agrupa por linha visual e aplica máscara por linha.
-    const words = el.textContent.trim().split(/\s+/);
-    el.setAttribute("aria-label", el.textContent.trim());
-    el.innerHTML = words.map((w) => '<span class="line-mask" aria-hidden="true"><span class="line-inner">' + w + "</span></span>").join(" ");
+    // divide só em espaços comuns: o &nbsp; de "a G4" mantém as duas palavras juntas
+    const text = el.textContent.trim();
+    const esc = (w) => w.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    const words = text.split(/[ \t\n\r]+/);
+    el.setAttribute("aria-label", text);
+    el.innerHTML = words.map((w) => '<span class="line-mask" aria-hidden="true"><span class="line-inner">' + esc(w) + "</span></span>").join(" ");
     let line = -1;
     let lastTop = null;
     el.querySelectorAll(".line-mask").forEach((mask) => {
@@ -468,6 +482,58 @@ const CONFIG = {
     });
   }
 
+  /* ---------- 9b. Ícone G4 abraçando o conteúdo ----------
+     Como no material de social media (feed e story): o símbolo é ampliado até o vazado do G
+     envolver o bloco de conteúdo. HOLLOW é a área do vazado, em unidades do símbolo (0–100),
+     medida no card "Semana do Cliente" (do título ao botão). Recalcula a cada largura de tela. */
+  function initMark() {
+    const HOLLOW = { x0: 44.0, y0: 50.6, x1: 71.8, y1: 76.6 };
+    const targets = [
+      // fit: 1 = o conteúdo cabe inteiro no vazado; < 1 = símbolo menor, as faixas encostam nas bordas
+      // do conteúdo (como no card, em que a diagonal passa pelo canto dos blocos de oferta).
+      // Se um bloco ficar largo e baixo demais, ajuste a diagramação (como na seção 7) antes de mexer no fit.
+      { section: document.querySelector(".final"), content: () => Array.from(document.querySelectorAll(".final__inner > *")), fit: () => 1 },
+      { section: document.querySelector(".diffs"), content: () => [document.querySelector(".diffs__list")], fit: () => 1 },
+    ].filter((t) => t.section);
+    if (!targets.length) return;
+
+    // Posição de layout (ignora o deslocamento das animações de entrada)
+    function layoutRect(el, ancestor) {
+      let x = 0, y = 0, node = el;
+      while (node && node !== ancestor) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent; }
+      return { x0: x, y0: y, x1: x + el.offsetWidth, y1: y + el.offsetHeight };
+    }
+
+    function place() {
+      targets.forEach(({ section, content, fit }) => {
+        const rects = content().filter((el) => el && el.offsetWidth && el.offsetHeight).map((el) => layoutRect(el, section));
+        if (!rects.length) return;
+        const box = {
+          x0: Math.min(...rects.map((r) => r.x0)), y0: Math.min(...rects.map((r) => r.y0)),
+          x1: Math.max(...rects.map((r) => r.x1)), y1: Math.max(...rects.map((r) => r.y1)),
+        };
+        // escala: o conteúdo inteiro cabe no vazado
+        const s = fit() * Math.max((box.x1 - box.x0) / (HOLLOW.x1 - HOLLOW.x0), (box.y1 - box.y0) / (HOLLOW.y1 - HOLLOW.y0));
+        // centro do vazado sobre o centro do conteúdo
+        const x = (box.x0 + box.x1) / 2 - ((HOLLOW.x0 + HOLLOW.x1) / 2) * s;
+        const y = (box.y0 + box.y1) / 2 - ((HOLLOW.y0 + HOLLOW.y1) / 2) * s;
+        MARKS.set(section, { s, x, y, cx: (box.x0 + box.x1) / 2, cy: (box.y0 + box.y1) / 2 });
+        writeMark(section, 1, 0);
+      });
+      if (requestMotion) requestMotion(); // reaplica a animação por cima da nova base
+    }
+
+    place();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    window.addEventListener("load", place);
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => place());
+      targets.forEach(({ section }) => ro.observe(section));
+    } else {
+      window.addEventListener("resize", place);
+    }
+  }
+
   /* ---------- 10. Animações ligadas ao scroll (seção 2 e seção 6) ---------- */
   function initScrollLinked() {
     const title = document.querySelector("[data-reveal='words']");
@@ -525,6 +591,123 @@ const CONFIG = {
     update();
   }
 
+  /* ---------- 10b. Rolagem interativa (página toda) ----------
+     Um único requestAnimationFrame, só transform/opacity/clip-path. Com reduced-motion fica só a barra.
+     - Barra de progresso da leitura embaixo do menu
+     - Hero: a foto em tela cheia encolhe até virar card arredondado; foto mais lenta; texto sobe e esmaece
+     - Prazo "30 dias": o número conta e a linha HOJE → 31/10 → DEZEMBRO se desenha com a rolagem
+     - Produtos (desktop): colunas andam em velocidades diferentes
+     - Ícone G4 (Diferenciais e seção 7): entra maior e se encaixa até abraçar o conteúdo no centro da tela
+     - Fotos dos produtos deslizam dentro da caixa
+     - Letreiro de clientes acelera com a rolagem e inverte ao subir */
+  function initScrollMotion() {
+    const root = document.documentElement;
+    const hero = document.querySelector(".hero");
+    const heroContent = document.querySelector(".hero__content");
+    const spec = document.querySelector(".urgency__spec");
+    const count = document.querySelector("[data-scroll-count]");
+    const products = document.querySelector(".products");
+    const photos = Array.from(document.querySelectorAll(".card__media img"));
+    const motion = !prefersReduced();
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+    let ticking = false;
+
+    if (motion) root.classList.add("motion");
+
+    function update() {
+      ticking = false;
+      const y = window.scrollY;
+      const vh = window.innerHeight;
+      const vw = root.clientWidth;
+
+      // progresso da leitura
+      const max = root.scrollHeight - vh;
+      root.style.setProperty("--sp", max > 0 ? clamp(y / max, 0, 1).toFixed(4) : 0);
+      if (!motion) return;
+
+      // hero: encolhe até card arredondado, alinhado às margens do conteúdo
+      if (hero) {
+        const h = hero.offsetHeight;
+        const p = clamp(y / (h * 0.85), 0, 1);
+        const e = easeOut(p);
+        const edge = heroContent ? heroContent.getBoundingClientRect().left + parseFloat(getComputedStyle(heroContent).paddingLeft) : 20;
+        hero.style.setProperty("--hi", (e * edge).toFixed(1) + "px");
+        hero.style.setProperty("--hb", (e * edge).toFixed(1) + "px");
+        hero.style.setProperty("--hr", (e * 24).toFixed(1) + "px");
+        hero.style.setProperty("--hero-py", (p * h * 0.3).toFixed(1) + "px");
+        hero.style.setProperty("--hero-cy", (-p * 90).toFixed(1) + "px");
+        hero.style.setProperty("--hero-o", clamp(1 - p * 1.2, 0, 1).toFixed(3));
+      }
+
+      // prazo "30 dias": conta e desenha a linha com a rolagem
+      if (spec) {
+        const r = spec.getBoundingClientRect();
+        const p = clamp((vh * 0.9 - r.top) / (vh * 0.55), 0, 1);
+        spec.style.setProperty("--tl", easeOut(p).toFixed(3));
+        if (count) count.textContent = Math.round(30 * easeOut(p));
+      }
+
+      // produtos: colunas em velocidades diferentes (só desktop)
+      if (products) {
+        const r = products.getBoundingClientRect();
+        const cards = products.querySelectorAll(".products__panel:not([hidden]) .card");
+        if (vw >= 1024 && r.bottom > 0 && r.top < vh) {
+          const off = clamp((r.top + r.height / 2 - vh / 2) / vh, -1, 1);
+          cards.forEach((c, i) => c.style.setProperty("--cy", ((i % 2 ? 1 : -1) * off * 36).toFixed(1) + "px"));
+        } else if (vw < 1024) {
+          cards.forEach((c) => c.style.removeProperty("--cy"));
+        }
+      }
+
+      // ícone G4: entra 30% maior e se encaixa (escala 1) quando a seção chega ao centro
+      MARKS.forEach((m, sec) => {
+        const r = sec.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        const off = r.top + r.height / 2 - vh / 2;
+        const fit = clamp(1 - Math.abs(off) / (vh * 0.75), 0, 1);
+        writeMark(sec, 1 + 0.3 * (1 - easeOut(fit)), -off * 0.08);
+      });
+
+      // fotos dos produtos deslizam dentro da caixa
+      photos.forEach((img) => {
+        const box = img.parentElement.getBoundingClientRect();
+        if (box.bottom < 0 || box.top > vh) return;
+        const off = clamp((box.top + box.height / 2 - vh / 2) / vh, -1, 1);
+        img.style.setProperty("--py", (-off * box.height * 0.035).toFixed(1) + "px");
+      });
+    }
+
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    requestMotion = onScroll;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+
+    // letreiro: acelera com a velocidade da rolagem e inverte ao subir; volta ao normal sozinho
+    const marqueeInner = document.querySelector(".marquee__inner");
+    if (motion && marqueeInner && marqueeInner.getAnimations) {
+      let lastY = window.scrollY, lastT = performance.now(), target = 1, rate = 1, running = false;
+      const loop = () => {
+        target += (1 - target) * 0.06;            // a "empurrada" da rolagem vai se dissipando
+        rate += (target - rate) * 0.15;           // suaviza a mudança de velocidade
+        const anim = marqueeInner.getAnimations()[0];
+        if (anim) anim.playbackRate = rate;
+        if (Math.abs(rate - 1) > 0.01 || Math.abs(target - 1) > 0.01) requestAnimationFrame(loop);
+        else { if (anim) anim.playbackRate = 1; running = false; }
+      };
+      window.addEventListener("scroll", () => {
+        const now = performance.now(), yy = window.scrollY;
+        const v = (yy - lastY) / Math.max(1, now - lastT); // px por ms (negativo = subindo)
+        lastY = yy; lastT = now;
+        target = clamp(1 + v * 6, -5, 7);
+        if (!running) { running = true; requestAnimationFrame(loop); }
+      }, { passive: true });
+    }
+  }
+
   /* ---------- 11. Botão flutuante ---------- */
   function initFloat() {
     const btn = document.getElementById("float-cta");
@@ -552,9 +735,11 @@ const CONFIG = {
   initCountdown();
   initNav();
   initMarquee();
+  initMark();
   initReveal();
   initHero();
   initTabs();
   initScrollLinked();
   initFloat();
+  initScrollMotion();
 })();
