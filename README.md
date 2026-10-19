@@ -57,8 +57,8 @@ afterDeadline: "message", // ou "hide"
 
 A mensagem do WhatsApp ganha "(via …)" conforme o parâmetro `c` da URL. O canal fica guardado durante a visita, mesmo navegando pelas âncoras.
 
-URL base atual (GitHub Pages, até ter domínio próprio):
-`https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/`
+URL base (domínio próprio, servido pelo GitHub Pages; o arquivo `CNAME` na raiz liga o domínio ao repositório):
+`https://campanha.g4uniformes.ind.br/`
 
 | Canal | Link | Mensagem enviada |
 |---|---|---|
@@ -111,15 +111,13 @@ Observações:
 - **Nomes do case:** se o case voltar, o nome do cliente não aparece em nenhum lugar da página, nem no nome dos arquivos. Mantenha `case-01…04`.
 - **Logos de clientes:** enquanto o SVG não existir, aparece o nome em texto. Os logos não ganham cor no hover, então exporte já em navy.
 - **Imagens com proporção diferente** são recortadas para caber (`object-fit: cover`); se mudar o tamanho real, atualize `width`/`height` no `<img>`.
-- **og-image:** as tags `og:image` e `twitter:image` já usam a URL completa do GitHub Pages (o WhatsApp não lê caminho relativo). Ao ligar o domínio próprio, troque o início do endereço.
+- **og-image:** as tags `og:image` e `twitter:image` usam a URL completa do domínio (o WhatsApp não lê caminho relativo). Se o domínio mudar, troque o início do endereço nelas, em `og:url` e no JSON-LD, e também o arquivo `CNAME`.
 - **Depoimento:** há um modelo pronto e comentado na seção Clientes do `index.html` (citação, nome, cargo, restaurante, foto ou vídeo).
 
 ## Pendências (`TODO` no código)
 
 - Endereço e CEP no JSON-LD (`<head>` do `index.html`)
-- Ao ligar o domínio próprio: trocar o endereço do GitHub Pages em `og:image`, `og:url`, `twitter:image` e no JSON-LD (`index.html`)
 - Meta Pixel / Google Tag: espaço comentado no `<head>`
-- Domínio próprio (arquivo `CNAME` só na Etapa 5)
 
 ## Auditoria
 
