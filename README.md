@@ -19,12 +19,23 @@ python -m http.server 8000
 
 ---
 
+## Depois de editar CSS ou JS: troque a versão
+
+No `index.html`, o CSS e o JS são carregados com um número de versão:
+
+```html
+<link rel="stylesheet" href="css/style.css?v=20261019b">
+<script src="js/script.js?v=20261019b" defer></script>
+```
+
+Sempre que mudar `css/style.css` ou `js/script.js` (inclusive o número do WhatsApp ou a data-limite), troque esse número nos dois lugares (ex.: `20261014b`, ou a data do dia). Sem isso, quem já visitou a página pode continuar vendo a versão antiga guardada no navegador, como o contador contando até a data anterior.
+
 ## Trocar o número do WhatsApp
 
 `js/script.js`, no topo:
 
 ```js
-whatsappNumber: "55XXXXXXXXXXX",
+whatsappNumber: "554584133498", // atual: G4 Uniformes Vendas, +55 45 8413-3498
 ```
 
 Só dígitos: `55` + DDD + número (ex.: `5545999999999`). Todos os botões da página usam esse número.
@@ -34,13 +45,13 @@ Só dígitos: `55` + DDD + número (ex.: `5545999999999`). Todos os botões da p
 `js/script.js`:
 
 ```js
-deadline: "2026-10-15T23:59:59-03:00",
+deadline: "2026-10-31T23:59:59-03:00",
 afterDeadline: "message", // ou "hide"
 ```
 
 - Mantenha o `-03:00` (horário de Brasília). O contador fica certo em qualquer fuso do visitante.
 - Depois do prazo: `"message"` troca o texto da barra por *"Fale com um consultor e confira a agenda de produção"*; `"hide"` esconde a barra. Em ambos os casos o contador grande da seção 7 some.
-- **A data "15/10" também aparece escrita nos textos** (barra, seção 2, seção 7, meta description). Se mudar o prazo, procure `15/10` no `index.html` e troque também.
+- **A data "31/10" também aparece escrita nos textos** (barra, seção 2, seção 7, meta description). Se mudar o prazo, procure `31/10` no `index.html` e troque também.
 
 ## Links por canal (`?c=`)
 
@@ -51,7 +62,7 @@ URL base atual (GitHub Pages, até ter domínio próprio):
 
 | Canal | Link | Mensagem enviada |
 |---|---|---|
-| Instagram (bio, stories) | `…/?c=ig` | …bares e restaurantes (via Instagram) |
+| Instagram (bio, stories) | `…/?c=ig` | …para a minha equipe (via Instagram). |
 | TikTok | `…/?c=tt` | …(via TikTok) |
 | LinkedIn | `…/?c=li` | …(via LinkedIn) |
 | Anúncios pagos | `…/?c=ads` | …(via Anúncio) |
@@ -91,12 +102,12 @@ Enquanto um arquivo não existe, o lugar dele aparece como bloco cinza com o nom
 | | `hero-poster.webp` | Hero, primeiro frame e versão estática | WebP 1920×1080 |
 | | `hero-01.webp` … `hero-04.webp` | Hero, slides 2 a 5 | WebP 1920×1080 |
 | `assets/produtos/` | `cozinha-dolma`, `cozinha-touca`, `cozinha-calca`, `cozinha-avental`, `salao-camisa`, `salao-avental` (`.webp`) | Seção Produtos | WebP 800×1000 (4:5), peça **em uso** |
-| `assets/case/` | `case-01.webp` (foto de maior impacto) + `case-02` … `case-04.webp` | Seção Clientes, galeria do case | `case-01`: WebP 1920×1080 (16:9 no desktop; no celular é recortada em 4:5, então mantenha o assunto no centro). `case-02…04`: WebP 1200×1500 (4:5; no celular recortadas em 4:3) |
+| `assets/case/` | — | **Não usada nesta versão** (o case saiu da seção Clientes; dá para recuperar o bloco com `git show 0f895e4:index.html`) | — |
 | `assets/clientes/` | `quinta-da-oliva`, `pateo-du-fogo`, `luigia-pizzaria`, `don-ritter`, `dom-aureo` (`.svg`) | Letreiro "Quem já atendemos" | SVG **monocromático em `#0A2447`** |
 
 Observações:
 - **Logo completo:** o arquivo do Figma só expôs o símbolo (ícone laranja), salvo em `assets/brand/simbolo-g4.svg`. Quando tiver `logo-g4-branco.svg`, troque o `src` no menu e no rodapé do `index.html` (há um comentário `TODO` em cada lugar) e ajuste `width`/`height`.
-- **Nomes do case:** o nome do cliente do case não aparece em nenhum lugar da página, nem no nome dos arquivos. Mantenha `case-01…04`.
+- **Nomes do case:** se o case voltar, o nome do cliente não aparece em nenhum lugar da página, nem no nome dos arquivos. Mantenha `case-01…04`.
 - **Logos de clientes:** enquanto o SVG não existir, aparece o nome em texto. Os logos não ganham cor no hover, então exporte já em navy.
 - **Imagens com proporção diferente** são recortadas para caber (`object-fit: cover`); se mudar o tamanho real, atualize `width`/`height` no `<img>`.
 - **og-image:** o WhatsApp não lê caminho relativo. No deploy, troque `assets/brand/og-image.jpg` nas tags `og:image` e `twitter:image` pela URL completa do site.
@@ -104,10 +115,9 @@ Observações:
 
 ## Pendências (`TODO` no código)
 
-- Número do WhatsApp (`js/script.js`)
-- Links de Instagram e LinkedIn (rodapé do `index.html`)
-- Telefone, endereço e CEP no JSON-LD (`<head>` do `index.html`)
-- URL absoluta da `og-image` (depois do deploy)
+- Endereço e CEP no JSON-LD (`<head>` do `index.html`)
+- `og-image.jpg` (1200×630) em `assets/brand/` — sem ela a prévia do link no WhatsApp sai sem imagem
+- Ao ligar o domínio próprio: trocar o endereço do GitHub Pages em `og:image`, `og:url`, `twitter:image` e no JSON-LD (`index.html`)
 - Meta Pixel / Google Tag: espaço comentado no `<head>`
 - Domínio próprio (arquivo `CNAME` só na Etapa 5)
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes</title>
-  <meta name="description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
+  <meta name="description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 31/10 e uniformize sua equipe antes do fim de ano.">
   <meta name="theme-color" content="#0A2447">
 
   <!-- Open Graph / Twitter (o link vai circular muito no WhatsApp) -->
@@ -12,14 +12,15 @@
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="G4 Uniformes">
   <meta property="og:title" content="Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes">
-  <meta property="og:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
-  <meta property="og:image" content="assets/brand/og-image.jpg"><!-- TODO: trocar por URL absoluta quando o endereço final (Pages ou domínio) estiver definido; o WhatsApp não lê caminho relativo -->
+  <meta property="og:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 31/10 e uniformize sua equipe antes do fim de ano.">
+  <meta property="og:image" content="https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/assets/brand/og-image.jpg"><!-- URL absoluta (o WhatsApp não lê caminho relativo). Ao ligar o domínio próprio, troque o início do endereço aqui, em twitter:image, og:url e no JSON-LD. -->
+  <meta property="og:url" content="https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Uniformes para Bares e Restaurantes em Cascavel | G4 Uniformes">
-  <meta name="twitter:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 15/10 e uniformize sua equipe antes do fim de ano.">
-  <meta name="twitter:image" content="assets/brand/og-image.jpg">
+  <meta name="twitter:description" content="Dólmãs, aventais, toucas e camisas com produção própria em Cascavel. Feche até 31/10 e uniformize sua equipe antes do fim de ano.">
+  <meta name="twitter:image" content="https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/assets/brand/og-image.jpg">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
@@ -33,7 +34,8 @@
   <link rel="preload" href="assets/fonts/texta-book.woff2" as="font" type="font/woff2" crossorigin>
   -->
 
-  <link rel="stylesheet" href="css/style.css">
+  <!-- ?v= força o navegador a baixar a versão nova. Ao editar o CSS ou o JS, troque o número (ex.: data + letra). -->
+  <link rel="stylesheet" href="css/style.css?v=20261019b">
 
   <script>
     // Marca JS ativo (liga os estados iniciais das animações) e troca assets ausentes por placeholders.
@@ -59,8 +61,9 @@
     "name": "G4 Uniformes",
     "description": "Uniformes profissionais com produção própria para bares e restaurantes.",
     "foundingDate": "2015",
-    "image": "assets/brand/og-image.jpg",
-    "telephone": "TODO",
+    "image": "https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/assets/brand/og-image.jpg",
+    "url": "https://eloisaschaefer15-art.github.io/LP-G4---Campanha-uniformes-gastron-micos/",
+    "telephone": "+55-45-8413-3498",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "TODO",
@@ -69,7 +72,11 @@
       "addressRegion": "PR",
       "addressCountry": "BR"
     },
-    "areaServed": "Cascavel e região"
+    "areaServed": "Cascavel e região",
+    "sameAs": [
+      "https://www.instagram.com/g4uniformes.oficial/",
+      "https://www.linkedin.com/company/g4-uniformes/"
+    ]
   }
   </script>
 </head>
@@ -80,8 +87,8 @@
   <header class="topbar" id="topbar">
     <div class="countbar" id="countbar" role="region" aria-label="Prazo de prioridade de produção">
       <div class="container countbar__inner">
-        <p class="countbar__text countbar__text--full" data-deadline-text>Feche seu pedido com prioridade de produção até: 15/10</p>
-        <p class="countbar__text countbar__text--short" data-deadline-text>Prioridade até 15/10 ·</p>
+        <p class="countbar__text countbar__text--full" data-deadline-text>Feche seu pedido com prioridade de produção até: 31/10</p>
+        <p class="countbar__text countbar__text--short" data-deadline-text>Prioridade até 31/10 ·</p>
         <p class="countbar__after" data-after-text hidden>Fale com um consultor e confira a agenda de produção</p>
         <span class="countbar__timer mono" data-countdown="inline" aria-hidden="true">
           <span class="countbar__long"><span data-cd="d">00</span> dias <span data-cd="h">00</span>:<span data-cd="m">00</span>:<span data-cd="s">00</span></span><span class="countbar__compact"><span data-cd="d">00</span>d <span data-cd="h">00</span>:<span data-cd="m">00</span>:<span data-cd="s">00</span></span>
@@ -130,17 +137,17 @@
       <div class="hero__media" data-hero>
         <!-- Primeiro frame (poster): único asset com fetchpriority="high". Em conexão lenta ou reduced-motion, fica só ele. -->
         <div class="hero__slide hero__slide--poster is-active" data-ph data-file="assets/hero/hero-poster.webp">
-          <img src="assets/hero/hero-poster.webp" alt="" width="1920" height="1080" fetchpriority="high">
+          <img src="assets/hero/hero-poster.webp" alt="" width="960" height="536" fetchpriority="high">
         </div>
         <!-- Slide 1: vídeo (src só é aplicado pelo JS quando a conexão e o reduced-motion permitem) -->
         <div class="hero__slide hero__slide--video" data-hero-slide data-ph data-file="assets/hero/hero-loop.mp4">
           <video muted loop playsinline preload="metadata" poster="assets/hero/hero-poster.webp" data-src="assets/hero/hero-loop.mp4" aria-hidden="true"></video>
         </div>
         <!-- Slides 2–5: fotos (carregadas pelo JS quando o carrossel inicia) -->
-        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-01.webp"><img data-src="assets/hero/hero-01.webp" alt="" width="1920" height="1080"></div>
-        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-02.webp"><img data-src="assets/hero/hero-02.webp" alt="" width="1920" height="1080"></div>
-        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-03.webp"><img data-src="assets/hero/hero-03.webp" alt="" width="1920" height="1080"></div>
-        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-04.webp"><img data-src="assets/hero/hero-04.webp" alt="" width="1920" height="1080"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-01.webp"><img data-src="assets/hero/hero-01.webp" alt="" width="1376" height="768"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-02.webp"><img data-src="assets/hero/hero-02.webp" alt="" width="1376" height="768"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-03.webp"><img data-src="assets/hero/hero-03.webp" alt="" width="1376" height="768"></div>
+        <div class="hero__slide" data-hero-slide data-ph data-file="assets/hero/hero-04.webp"><img data-src="assets/hero/hero-04.webp" alt="" width="1376" height="768"></div>
         <div class="hero__overlay"></div>
       </div>
 
@@ -161,22 +168,24 @@
 
     <!-- ================= 2. URGÊNCIA ================= -->
     <section class="urgency section" id="urgencia" aria-labelledby="urgency-title">
-      <div class="container urgency__grid">
-        <div class="urgency__data" data-reveal="fade-up">
-          <p class="urgency__num mono"><span data-count-to="30">30</span></p>
-          <p class="urgency__label mono">DIAS — PRAZO MÉDIO DE PRODUÇÃO</p>
-        </div>
+      <div class="container">
         <div class="urgency__text">
           <h2 class="urgency__title" id="urgency-title" data-reveal="words">Cada semana de espera é uma semana a menos antes do movimento.</h2>
-          <p class="urgency__body" data-reveal="fade-up">Da aprovação à ficha técnica, até a produção em si, a G4 leva em média 30 dias para entregar. Fechar até 15/10 coloca sua equipe pronta antes do movimento decolar. Depois dessa data, a fila aperta, porque não é só a sua demanda que cresce nessa época, é a agenda de produção do setor inteiro que trava ao mesmo tempo.</p>
+          <p class="urgency__body" data-reveal="fade-up">Da aprovação à ficha técnica, até a produção em si, a G4 leva em média 30 dias para entregar. Fechar até 31/10 coloca sua equipe pronta antes do movimento decolar. Depois dessa data, a fila aperta, porque não é só a sua demanda que cresce nessa época, é a agenda de produção do setor inteiro que trava ao mesmo tempo.</p>
         </div>
-      </div>
-      <div class="container">
-        <div class="timeline-mini mono" data-reveal="draw" aria-hidden="true">
-          <span class="timeline-mini__track"><span class="timeline-mini__fill"></span></span>
-          <span class="timeline-mini__mark timeline-mini__mark--start">HOJE</span>
-          <span class="timeline-mini__mark timeline-mini__mark--mid">15/10</span>
-          <span class="timeline-mini__mark timeline-mini__mark--end">NOVEMBRO/DEZEMBRO</span>
+
+        <!-- Faixa de ficha técnica: prazo médio + linha do tempo até o movimento -->
+        <div class="urgency__spec" data-reveal="fade-up">
+          <div class="urgency__data">
+            <p class="urgency__num mono"><span data-count-to="30">30</span></p>
+            <p class="urgency__label mono">DIAS — PRAZO MÉDIO DE PRODUÇÃO</p>
+          </div>
+          <div class="timeline-mini mono" data-reveal="draw" aria-hidden="true">
+            <span class="timeline-mini__track"><span class="timeline-mini__fill"></span></span>
+            <span class="timeline-mini__mark timeline-mini__mark--start">HOJE</span>
+            <span class="timeline-mini__mark timeline-mini__mark--mid">31/10</span>
+            <span class="timeline-mini__mark timeline-mini__mark--end">DEZEMBRO</span>
+          </div>
         </div>
       </div>
     </section>
@@ -199,7 +208,7 @@
           <ul class="cards cards--4">
             <li class="card" data-reveal="fade-up">
               <div class="card__media" data-ph data-file="assets/produtos/cozinha-dolma.webp">
-                <img src="assets/produtos/cozinha-dolma.webp" alt="Chef de cozinha vestindo dólmã em serviço" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/cozinha-dolma.webp" alt="Dólmã branca de chef, abotoamento duplo, com punhos e botões verdes" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 01 — COZINHA</p>
               <h3 class="card__name">Dólmã (jaleco de chef)</h3>
@@ -207,7 +216,7 @@
             </li>
             <li class="card" data-reveal="fade-up" data-reveal-delay="100">
               <div class="card__media" data-ph data-file="assets/produtos/cozinha-touca.webp">
-                <img src="assets/produtos/cozinha-touca.webp" alt="Cozinheira usando touca personalizada durante o preparo" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/cozinha-touca.webp" alt="Touca de cozinha branca com amarração atrás" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 02 — COZINHA</p>
               <h3 class="card__name">Toucas</h3>
@@ -215,7 +224,7 @@
             </li>
             <li class="card" data-reveal="fade-up" data-reveal-delay="200">
               <div class="card__media" data-ph data-file="assets/produtos/cozinha-calca.webp">
-                <img src="assets/produtos/cozinha-calca.webp" alt="Cozinheiro em pé na bancada usando calça de chef" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/cozinha-calca.webp" alt="Calça de chef branca com cós de elástico e perna reta" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 03 — COZINHA</p>
               <h3 class="card__name">Calças de chef</h3>
@@ -223,7 +232,7 @@
             </li>
             <li class="card" data-reveal="fade-up" data-reveal-delay="300">
               <div class="card__media" data-ph data-file="assets/produtos/cozinha-avental.webp">
-                <img src="assets/produtos/cozinha-avental.webp" alt="Profissional de cozinha usando avental com a marca da casa" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/cozinha-avental.webp" alt="Avental de cozinha verde-escuro com alça regulável no pescoço" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 04 — COZINHA</p>
               <h3 class="card__name">Aventais</h3>
@@ -236,7 +245,7 @@
           <ul class="cards cards--2">
             <li class="card">
               <div class="card__media" data-ph data-file="assets/produtos/salao-camisa.webp">
-                <img src="assets/produtos/salao-camisa.webp" alt="Garçom de camisa social atendendo uma mesa" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/salao-camisa.webp" alt="Camisa social cinza-clara de manga longa com detalhes em verde-escuro na gola, na carcela e no punho" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 05 — SALÃO</p>
               <h3 class="card__name">Camisa social</h3>
@@ -244,7 +253,7 @@
             </li>
             <li class="card">
               <div class="card__media" data-ph data-file="assets/produtos/salao-avental.webp">
-                <img src="assets/produtos/salao-avental.webp" alt="Atendente de salão usando avental durante o serviço" width="800" height="1000" loading="lazy">
+                <img src="assets/produtos/salao-avental.webp" alt="Avental de salão verde-escuro, modelo saia, com viés branco na cintura e amarração lateral" width="800" height="1000" loading="lazy">
               </div>
               <p class="card__ref mono">REF. 06 — SALÃO</p>
               <h3 class="card__name">Aventais de salão</h3>
@@ -259,8 +268,8 @@
 
     <!-- ================= 4. DIFERENCIAIS ================= -->
     <section class="diffs section on-dark" id="diferenciais" aria-labelledby="diffs-title">
-      <div class="container">
-        <h2 id="diffs-title" data-reveal="fade-up">Por que a G4</h2>
+      <div class="container diffs__grid">
+        <h2 id="diffs-title" data-reveal="fade-up">Por que a&nbsp;G4</h2>
         <ol class="diffs__list">
           <li class="diff" data-reveal="fade-up">
             <span class="diff__num mono" aria-hidden="true">01</span>
@@ -291,27 +300,10 @@
       <div class="container">
         <header class="section-head">
           <h2 id="clients-title" data-reveal="fade-up">Quem já vestiu a equipe com a&nbsp;G4</h2>
-          <p class="section-sub" data-reveal="fade-up" data-reveal-delay="100">Um dos nomes mais conceituados da gastronomia em Cascavel confiou na G4 para uniformizar sua equipe, do salão à cozinha.</p>
         </header>
 
-        <!-- Componente .case: pode ser trocado ou complementado pelo bloco .testimonial abaixo.
-             O nome do cliente NÃO aparece aqui (nem em legenda, alt ou nome de arquivo). -->
-        <div class="case">
-          <div class="case__gallery">
-            <figure class="case__item case__item--main" data-ph data-file="assets/case/case-01.webp" data-reveal="fade-up">
-              <img src="assets/case/case-01.webp" alt="Equipe de cozinha uniformizada pela G4 durante o serviço" width="1920" height="1080" loading="lazy">
-            </figure>
-            <figure class="case__item" data-ph data-file="assets/case/case-02.webp" data-reveal="fade-up" data-reveal-delay="100">
-              <img src="assets/case/case-02.webp" alt="Equipe de salão uniformizada pela G4 atendendo clientes" width="1200" height="1500" loading="lazy">
-            </figure>
-            <figure class="case__item" data-ph data-file="assets/case/case-03.webp" data-reveal="fade-up" data-reveal-delay="200">
-              <img src="assets/case/case-03.webp" alt="Detalhe da personalização bordada no uniforme" width="1200" height="1500" loading="lazy">
-            </figure>
-            <figure class="case__item" data-ph data-file="assets/case/case-04.webp" data-reveal="fade-up" data-reveal-delay="300">
-              <img src="assets/case/case-04.webp" alt="Equipe completa, da cozinha ao salão, vestindo os uniformes G4" width="1200" height="1500" loading="lazy">
-            </figure>
-          </div>
-        </div>
+        <!-- Case com galeria (case-01…04) retirado nesta versão. Para recuperar o bloco:
+             git show 0f895e4:index.html  (seção 5, componente .case; o CSS .case__* continua no style.css) -->
 
         <!-- ===== Modelo de depoimento (descomente e preencha quando houver) =====
         <figure class="testimonial" data-reveal="fade-up">
@@ -368,9 +360,9 @@
     <section class="final section on-orange" id="cta-final" aria-labelledby="final-title">
       <div class="container final__inner">
         <h2 id="final-title" data-reveal="fade-up">Garanta sua equipe uniformizada antes da alta temporada</h2>
-        <p class="final__sub" data-reveal="fade-up" data-reveal-delay="100">Feche seu pedido até 15/10 e receba com prioridade de produção, antes que a fila do fim de ano comece.</p>
+        <p class="final__sub" data-reveal="fade-up" data-reveal-delay="100">Feche seu pedido até 31/10 e receba com prioridade de produção, antes que a fila do fim de ano comece.</p>
 
-        <div class="final__countdown mono" data-countdown="blocks" data-reveal="fade-up" data-reveal-delay="200" role="timer" aria-label="Tempo restante até 15/10">
+        <div class="final__countdown mono" data-countdown="blocks" data-reveal="fade-up" data-reveal-delay="200" role="timer" aria-label="Tempo restante até 31/10">
           <div class="cd-block"><span class="cd-block__num" data-cd="d">00</span><span class="cd-block__label">DIAS</span></div>
           <div class="cd-block"><span class="cd-block__num" data-cd="h">00</span><span class="cd-block__label">HORAS</span></div>
           <div class="cd-block"><span class="cd-block__num" data-cd="m">00</span><span class="cd-block__label">MIN</span></div>
@@ -392,12 +384,12 @@
       <p class="footer__text">Especialistas em uniformização empresarial desde 2015.</p>
       <ul class="footer__social">
         <li>
-          <a href="#TODO-instagram" target="_blank" rel="noopener" aria-label="G4 Uniformes no Instagram (abre em nova aba)">
+          <a href="https://www.instagram.com/g4uniformes.oficial/" target="_blank" rel="noopener" aria-label="G4 Uniformes no Instagram (abre em nova aba)">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </li>
         <li>
-          <a href="#TODO-linkedin" target="_blank" rel="noopener" aria-label="G4 Uniformes no LinkedIn (abre em nova aba)">
+          <a href="https://www.linkedin.com/company/g4-uniformes/" target="_blank" rel="noopener" aria-label="G4 Uniformes no LinkedIn (abre em nova aba)">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm7 0h3.8v1.6h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4V9.5z"/></svg>
           </a>
         </li>
@@ -409,6 +401,6 @@
   <!-- Botão flutuante (só mobile) -->
   <a class="float-cta btn btn--orange" id="float-cta" data-wa href="https://wa.me/" target="_blank" rel="noopener" aria-label="Orçamento no WhatsApp (abre em nova aba)" aria-hidden="true" tabindex="-1">Orçamento no WhatsApp</a>
 
-  <script src="js/script.js" defer></script>
+  <script src="js/script.js?v=20261019b" defer></script>
 </body>
 </html>

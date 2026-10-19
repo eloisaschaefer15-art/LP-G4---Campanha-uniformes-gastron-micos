@@ -5,10 +5,10 @@
 
 /* ---------- 1. CONFIG ---------- */
 const CONFIG = {
-  whatsappNumber: "55XXXXXXXXXXX", // TODO: número do WhatsApp Business da campanha (só dígitos, com 55 + DDD)
-  deadline: "2026-10-15T23:59:59-03:00", // fim da prioridade de produção (horário de Brasília)
+  whatsappNumber: "554584133498", // WhatsApp G4 Uniformes Vendas: +55 45 8413-3498 (só dígitos, com 55 + DDD)
+  deadline: "2026-10-31T23:59:59-03:00", // fim da prioridade de produção (horário de Brasília)
   afterDeadline: "message", // depois do prazo: "message" (troca o texto da barra) ou "hide" (esconde a barra)
-  baseMessage: "Olá! Vim da campanha de uniformes para bares e restaurantes",
+  baseMessage: "Olá! Vim pela campanha de uniformes gastronômicos da G4 e quero um orçamento para a minha equipe.",
   channels: { // ?c=ig → "(via Instagram)" etc.
     ig: "Instagram",
     tt: "TikTok",
@@ -49,7 +49,12 @@ const CONFIG = {
   function buildWhatsAppUrl() {
     const channel = getChannel();
     let message = CONFIG.baseMessage;
-    if (channel) message += " (via " + CONFIG.channels[channel] + ")";
+    if (channel) {
+      // A origem entra antes da pontuação final: "…minha equipe (via Instagram)."
+      const via = " (via " + CONFIG.channels[channel] + ")";
+      const m = message.match(/^(.*?)([.!?]*)$/s);
+      message = m[1] + via + m[2];
+    }
     return "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + encodeURIComponent(message);
   }
 
@@ -263,17 +268,27 @@ const CONFIG = {
     const slides = Array.from(hero.querySelectorAll("[data-hero-slide]"));
     if (!slides.length) return;
 
-    // Carrega os assets dos slides
-    slides.forEach((slide) => {
-      const media = slide.querySelector("[data-src]");
-      if (!media) return;
-      media.src = media.dataset.src;
-      media.removeAttribute("data-src");
-    });
-
     const video = hero.querySelector("video");
+    const failed = new Set(); // slides cujo asset não carregou (ex.: vídeo ainda não enviado)
     let index = -1;
     let timer = null;
+    let posterOn = true;
+
+    function stop() { clearInterval(timer); timer = null; if (video) video.pause(); }
+
+    // Mostra o poster (versão fixa) e para o carrossel quando não sobra nenhum slide válido.
+    function fallbackToPoster() {
+      stop();
+      slides.forEach((s) => s.classList.remove("is-active"));
+      poster.classList.add("is-active");
+      posterOn = true;
+    }
+
+    function hidePoster() {
+      if (!posterOn) return;
+      posterOn = false;
+      poster.classList.remove("is-active");
+    }
 
     function show(i) {
       slides.forEach((s, n) => {
@@ -293,13 +308,39 @@ const CONFIG = {
         }
       }
       index = i;
+      // O poster só sai quando o slide ativo já tem imagem/vídeo pronto (evita piscar placeholder)
+      const media = slides[i].querySelector("img, video");
+      const ready = media && (media.tagName === "VIDEO" ? media.readyState >= 2 : media.complete && media.naturalWidth > 0);
+      if (ready) hidePoster();
     }
 
-    function next() { show((index + 1) % slides.length); }
+    // Próximo slide válido, pulando os que falharam
+    function next() {
+      for (let step = 1; step <= slides.length; step++) {
+        const i = (index + step) % slides.length;
+        if (!failed.has(slides[i])) { show(i); return; }
+      }
+      fallbackToPoster();
+    }
 
-    // Vídeo é o primeiro slide; o poster sai quando ele começa.
+    // Carrega os assets dos slides (listeners antes do src, para não perder o evento)
+    slides.forEach((slide) => {
+      const media = slide.querySelector("[data-src]");
+      if (!media) return;
+      media.addEventListener(media.tagName === "VIDEO" ? "loadeddata" : "load", () => {
+        if (slides[index] === slide) hidePoster();
+      });
+      media.addEventListener("error", () => {
+        failed.add(slide);
+        slide.classList.remove("is-active");
+        if (slides[index] === slide) next();
+      });
+      media.src = media.dataset.src;
+      media.removeAttribute("data-src");
+    });
+
+    // Vídeo é o primeiro slide; se ele não existir, o carrossel começa pela primeira foto.
     show(0);
-    setTimeout(() => poster.classList.remove("is-active"), 50);
     timer = setInterval(next, CONFIG.heroInterval);
 
     // Pausa quando o hero sai da tela ou a aba fica oculta
@@ -372,16 +413,59 @@ const CONFIG = {
   function initMarquee() {
     const marquee = document.querySelector("[data-marquee]");
     if (!marquee) return;
+    // Com reduced-motion o letreiro vira grade estática: nada de cópias.
+    if (prefersReduced()) return;
+
     const track = marquee.querySelector(".marquee__track");
+    const originals = Array.from(track.children);
     const inner = document.createElement("div");
     inner.className = "marquee__inner";
     marquee.insertBefore(inner, track);
     inner.appendChild(track);
-    // Cópia para o loop infinito: escondida de leitores de tela e fora da ordem de tabulação
-    const clone = track.cloneNode(true);
-    clone.setAttribute("aria-hidden", "true");
-    clone.querySelectorAll("img").forEach((img) => { img.alt = ""; });
-    inner.appendChild(clone);
+
+    const SPEED = 40; // px por segundo
+
+    // Cópias decorativas: escondidas de leitores de tela e sem alt duplicado
+    const decorative = (node) => {
+      node.setAttribute("aria-hidden", "true");
+      node.setAttribute("data-marquee-copy", "");
+      node.querySelectorAll("img").forEach((img) => { img.alt = ""; });
+      return node;
+    };
+
+    let builtFor = 0;
+    function build() {
+      const minWidth = marquee.clientWidth;
+      if (!minWidth || minWidth === builtFor) return;
+      builtFor = minWidth;
+      inner.querySelectorAll("[data-marquee-copy]").forEach((n) => n.remove());
+
+      // 1) Repete os nomes dentro da volta até ela ser pelo menos tão larga quanto a tela.
+      //    Sem isso, com poucos clientes sobrava um vão em branco antes do loop recomeçar.
+      for (let guard = 0; track.getBoundingClientRect().width < minWidth && guard < 20; guard++) {
+        originals.forEach((li) => track.appendChild(decorative(li.cloneNode(true))));
+      }
+      // 2) Segunda volta idêntica: a animação anda -50% e emenda sem salto.
+      inner.appendChild(decorative(track.cloneNode(true)));
+
+      inner.style.setProperty("--marquee-dur", (track.getBoundingClientRect().width / SPEED).toFixed(1) + "s");
+    }
+
+    build();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { builtFor = 0; build(); });
+    // A largura da volta muda quando um logo SVG falha e vira nome em texto (ou quando o SVG chega).
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(() => {
+        const w = track.getBoundingClientRect().width;
+        if (w < marquee.clientWidth) { builtFor = 0; build(); }
+        else inner.style.setProperty("--marquee-dur", (w / SPEED).toFixed(1) + "s");
+      }).observe(track);
+    }
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(build, 150);
+    });
   }
 
   /* ---------- 10. Animações ligadas ao scroll (seção 2 e seção 6) ---------- */
@@ -411,8 +495,9 @@ const CONFIG = {
       // Seção 2: cada palavra vai de 0,15 a 1 conforme o título atravessa a viewport
       if (title) {
         const r = title.getBoundingClientRect();
-        // 0 quando o topo do título está a 90% da tela, 1 quando está a 35%
-        const p = clamp((vh * 0.9 - r.top) / (vh * 0.55));
+        // 0 quando o topo do título está a 90% da tela, 1 quando está a 55%
+        // (termina antes de o leitor chegar ao fim da frase; antes ficava apagado até 35%)
+        const p = clamp((vh * 0.9 - r.top) / (vh * 0.35));
         const n = words.length;
         words.forEach((w, i) => {
           const local = clamp(p * n - i);
