@@ -24,8 +24,8 @@ python -m http.server 8000
 No `index.html`, o CSS e o JS são carregados com um número de versão:
 
 ```html
-<link rel="stylesheet" href="css/style.css?v=20261019c">
-<script src="js/script.js?v=20261019c" defer></script>
+<link rel="stylesheet" href="css/style.css?v=20261019e">
+<script src="js/script.js?v=20261019e" defer></script>
 ```
 
 Sempre que mudar `css/style.css` ou `js/script.js` (inclusive o número do WhatsApp ou a data-limite), troque esse número nos dois lugares (ex.: `20261014b`, ou a data do dia). Sem isso, quem já visitou a página pode continuar vendo a versão antiga guardada no navegador, como o contador contando até a data anterior.

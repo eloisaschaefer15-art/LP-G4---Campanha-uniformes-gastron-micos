@@ -58,7 +58,12 @@
   --maxw: 1320px;
   --section-pt: 64px;  /* topo menor: ao navegar pelas âncoras, o título fica perto do menu */
   --section-pb: 88px;
-  --radius: 2px;
+  --radius: 8px;     /* cantos de blocos e botões (material "Semana do Cliente") */
+  --radius-lg: 12px; /* painéis maiores */
+
+  /* Fundo navy com profundidade (material "Semana do Cliente"):
+     degradê #16519E → #0A2447 + símbolo G4 gigante (#103C75, 60%) saindo pelas bordas */
+  --navy-top: #16519E;
 
   /* Header fixo = barra de contagem + menu.
      --countbar-h é medido pelo JS (0 se a barra estiver escondida). */
@@ -270,6 +275,20 @@ h2 {
   .nav__toggle, .menu-mobile { display: none !important; }
 }
 
+/* ---------- Fundo navy com profundidade ----------
+   Diferenciais, faixa do "30 dias" e rodapé. O símbolo fica à direita, recortado pelas bordas. */
+.diffs, .urgency__spec, .footer {
+  background-color: var(--navy);
+  background-image:
+    url("../assets/brand/g4-marca-fundo.svg"),
+    linear-gradient(180deg, var(--navy-top) -30%, var(--navy) 100%);
+  background-repeat: no-repeat;
+  background-size: auto 140%, 100% 100%;
+  background-position: right -10% top 0, 0 0;
+}
+.urgency__spec { background-size: auto 220%, 100% 100%; background-position: right -6% top 10%, 0 0; }
+.footer { background-size: auto 260%, 100% 100%; background-position: right -4% top 0, 0 0; }
+
 /* =====================================================================
    1. HERO
    ===================================================================== */
@@ -396,7 +415,7 @@ h2 {
 /* Faixa de ficha técnica (laranja só sobre navy) */
 .urgency__spec {
   margin-top: 56px; display: grid; gap: 36px;
-  background: var(--navy); color: #fff; border-radius: var(--radius);
+  background-color: var(--navy); color: #fff; border-radius: var(--radius-lg);
   padding: 28px 24px 32px;
 }
 .urgency__num {
@@ -422,8 +441,9 @@ h2 {
 .timeline-mini__mark--start::before { left: 0; }
 .timeline-mini__mark--end { right: 0; }
 .timeline-mini__mark--end::before { right: 0; }
-.timeline-mini__mark--mid { top: 0; left: 50%; transform: translateX(-50%); color: var(--orange); font-weight: 500; }
-.timeline-mini__mark--mid::before { top: 29px; left: calc(50% - 4px); background: var(--orange); }
+/* 31/10 em 20px negrito: destaque do prazo e texto "grande" na WCAG (mín. 3:1 sobre o degradê) */
+.timeline-mini__mark--mid { top: -2px; left: 50%; transform: translateX(-50%); color: var(--orange); font-weight: 700; font-size: 1.25rem; line-height: 1; letter-spacing: 0.04em; }
+.timeline-mini__mark--mid::before { top: 31px; left: calc(50% - 4px); background: var(--orange); }
 
 @media (min-width: 768px) {
   .urgency__body { font-size: 1.1875rem; }
@@ -508,12 +528,12 @@ h2 {
    Tabela de especificação: título à esquerda (fixo ao rolar no desktop),
    itens em linhas com número / título / texto separados por linhas finas.
    ===================================================================== */
-.diffs { background: var(--navy); color: #fff; }
+.diffs { background-color: var(--navy); color: #fff; }
 .diffs h2 { color: #fff; margin-bottom: 40px; }
 .diffs__list { border-top: 1px solid rgba(255,255,255,0.16); }
 .diff {
   position: relative;
-  display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 16px;
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px;
   padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.16);
 }
 /* Linha laranja que corre sobre o divisor no hover (só desktop) */
@@ -523,9 +543,10 @@ h2 {
   transition: transform 500ms var(--ease);
 }
 @media (hover: hover) { .diff:hover::before { transform: scaleX(1); } }
+/* 24px: conta como texto grande na WCAG (mín. 3:1), então o laranja passa também no topo mais claro do degradê */
 .diff__num {
-  grid-column: 1; grid-row: 1 / span 2; padding-top: 0.45em;
-  font-size: 0.875rem; font-weight: 500; letter-spacing: 0.08em; color: var(--orange);
+  grid-column: 1; grid-row: 1 / span 2;
+  font-size: 1.5rem; line-height: 1.1; font-weight: 500; letter-spacing: 0.02em; color: var(--orange);
 }
 .diff__title { grid-column: 2; font-weight: var(--w-bold); font-size: 1.375rem; line-height: 1.2; }
 .diff__text { grid-column: 2; margin-top: 8px; color: rgba(255,255,255,0.8); max-width: 48ch; }
@@ -535,7 +556,7 @@ h2 {
     grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1.35fr); column-gap: 24px;
     align-items: baseline; padding: 36px 0;
   }
-  .diff__num { grid-row: 1; padding-top: 0; }
+  .diff__num { grid-row: 1; }
   .diff__title { font-size: 1.5rem; }
   .diff__text { grid-column: 3; margin-top: 0; }
 }
@@ -663,7 +684,7 @@ html:not(.js) .steps__fill { transform: none; }
 /* =====================================================================
    RODAPÉ
    ===================================================================== */
-.footer { background: var(--navy); color: #fff; padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); }
+.footer { background-color: var(--navy); color: #fff; padding: 64px 0 calc(40px + env(safe-area-inset-bottom)); }
 .footer__inner { display: grid; gap: 24px; }
 .footer__logo { width: auto; height: 40px; }
 /* Cabe em uma linha no desktop; no mobile quebra em duas linhas equilibradas */
